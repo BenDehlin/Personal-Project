@@ -1,7 +1,8 @@
 const actionTypes = {
+  SET_USER: 'SET_USER',
   GET_USER: 'GET_USER',
-  REGISTER: 'REGISTER',
-  LOGIN: 'LOGIN',
+  // REGISTER: 'REGISTER',
+  // LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
 
   PENDING: '_PENDING',

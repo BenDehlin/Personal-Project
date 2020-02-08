@@ -4,18 +4,14 @@ import { getUser } from "../../redux/authReducer"
 import Button from "@material-ui/core/Button"
 import { createUseStyles } from "react-jss"
 import useAxios from "../../hooks/useAxios"
+import {page} from '../../global-styles/global-styles'
 
+// const {page} = globalStyles
 const useStyles = createUseStyles({
   dashboard: {
-    backgroundColor: "white",
-    margin: { top: "5vh" },
-    borderRadius: 10,
-    width: "80%",
+    ...page,
+    flexFlow: 'row',
     minHeight: "80vh",
-    boxShadow: ".6em .6em .6em blue",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center"
   },
   side: {
     width: "100%",
@@ -30,9 +26,10 @@ const useStyles = createUseStyles({
 const Dashboard = ({ user, getUser, history }) => {
   const classes = useStyles()
   const [forums, setForums] = useAxios("/api/forums")
-  // useEffect(() => {
-  //   getUser()
-  // }, [getUser])
+  useEffect(() => {
+    getUser()
+  }, [getUser])
+  console.log(user)
   return (
     <div className={classes.dashboard}>
       {user && (

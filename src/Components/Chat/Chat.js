@@ -5,19 +5,14 @@ import io from "socket.io-client"
 import TextField from "@material-ui/core/TextField"
 import {createUseStyles} from 'react-jss'
 import Button from "@material-ui/core/Button"
+import { page } from "../../global-styles/global-styles"
 
 const useStyles = createUseStyles({
   chat: {
-    margin: {top: '5vh', bottom: '5vh'},
-    borderRadius: 10,
-    backgroundColor: 'white',
+    ...page,
     width: '80%',
     minHeight: '80vh',
-    boxShadow: '.6em .6em .6em blue',
-    display: 'flex',
-    flexFlow: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center'
   },
   chatMessages: {},
   chatInput: {
@@ -35,16 +30,15 @@ const useStyles = createUseStyles({
 })
 
 const Chat = ({ user, getUser, match }) => {
+  console.log(user)
   const {chat, chatMessages, chatInput, chatInputField} = useStyles()
-  // const [username, setUsername] = useState("")
-  // const [room, setRoom] = useState("")
   let [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
   const ENDPOINT = "http://localhost:3333"
   const socket = io.connect(ENDPOINT)
 
   useEffect(() => {
-    getUser()
+    // getUser()
     if (user && match.params.room && user.username) {
       socket.emit("join", { username: user.username, room: match.params.room })
     }
