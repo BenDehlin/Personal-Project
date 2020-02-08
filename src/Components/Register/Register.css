@@ -1,0 +1,26 @@
+.register-form{
+  /* margin-top: 100px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 60vw;
+  min-height: 60vh;
+  box-shadow: .6em .6em .6em gainsboro; */
+}
+
+.form-section{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media(max-width: 850px){
+  .form-section{
+    margin: 10px;
+    padding: 10px;
+    flex-flow: column;
+  } 
+}
