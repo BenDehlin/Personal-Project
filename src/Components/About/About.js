@@ -15,12 +15,13 @@ const useStyles = createUseStyles({
   }
 })
 
-const About = props => {
+const About = () => {
   const {about} = useStyles()
   return (
     <div className={about}>
       <h2>Core Technologies</h2>
       <ul>
+        <li>Database - PostgreSQL</li>
         <li>Server - Node</li>
         <li>Frontend - React</li>
         <li>State Management/Component Lifecycle:</li>

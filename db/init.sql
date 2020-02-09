@@ -37,6 +37,7 @@ forum_name VARCHAR(20) NOT NULL);
 
 CREATE TABLE posts
 (id SERIAL PRIMARY KEY,
+post_title VARCHAR(20) NOT NULL,
 post_content VARCHAR(2500) NOT NULL,
 post_img VARCHAR(200),
 user_id INTEGER REFERENCES users(id),
