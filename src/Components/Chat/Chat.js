@@ -29,8 +29,7 @@ const useStyles = createUseStyles({
   }
 })
 
-const Chat = ({ user, getUser, match }) => {
-  console.log(user)
+const Chat = ({ user, match }) => {
   const {chat, chatMessages, chatInput, chatInputField} = useStyles()
   let [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
@@ -38,7 +37,6 @@ const Chat = ({ user, getUser, match }) => {
   const socket = io.connect(ENDPOINT)
 
   useEffect(() => {
-    // getUser()
     if (user && match.params.room && user.username) {
       socket.emit("join", { username: user.username, room: match.params.room })
     }

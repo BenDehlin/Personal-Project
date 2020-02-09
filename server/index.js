@@ -2,13 +2,22 @@ require("dotenv").config()
 const express = require("express")
 const session = require("express-session")
 const massive = require("massive")
+const nodemailer = require('nodemailer')
 const app = express()
-const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
+const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, SERVER_EMAIL, SERVER_PASSWORD } = process.env
 
 //CONTROLLERS
 const authCtrl = require("./controllers/authController")
 const chatCtrl = require("./controllers/chatController")
 const forumCtrl = require('./controllers/forumController')
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: SERVER_EMAIL,
+    pass: SERVER_PASSWORD
+  }
+})
 
 app.use(express.json())
 app.use(
@@ -21,8 +30,9 @@ app.use(
 )
 
 massive(CONNECTION_STRING).then(db => {
-  console.log('Database connected')
   app.set('db', db)
+  console.log('Database connected')
+  app.set('transporter', transporter)
   const io = require('socket.io')(
     app.listen(SERVER_PORT, () => console.log(`Server listening on ${SERVER_PORT}`))
   )

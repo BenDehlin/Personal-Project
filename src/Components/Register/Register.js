@@ -3,48 +3,49 @@ import { Formik, Form } from "formik"
 import Button from "@material-ui/core/Button"
 import CustomTextField from "../CustomTextField/CustomTextField"
 import registerSchema from "../../schema/schema"
-// import "./Register.css"
 import { connect } from "react-redux"
 import { setUser } from "../../redux/authReducer"
 import { createUseStyles } from "react-jss"
-import { variables, page } from "../../global-styles/global-styles"
-import axios from 'axios'
-import {toast} from 'react-toastify'
+import { page } from "../../global-styles/global-styles"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 const useStyles = createUseStyles({
   registerForm: {
     ...page
   },
   formSection: {
-    width: '50%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    width: "50%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
-  '@media (max-width: 850px)': {
+  "@media (max-width: 850px)": {
     registerForm: {
-      minHeight: '80vh'
+      minHeight: "80vh"
     },
     formSection: {
       margin: 10,
       padding: 10,
       flexGrow: 1,
-      flexFlow: 'column',
-      justifyContent: 'space-between'
+      flexFlow: "column",
+      justifyContent: "space-between"
     }
   }
 })
 
 const Register = ({ history, setUser }) => {
   const { registerForm, formSection } = useStyles()
-  const register = (body) => {
-    axios.post('/auth/register', body)
-    .then(results => {
-      toast.success('Login Successful')
-      setUser(results.data)
-      history.push("/dashboard")
-    }).catch(err => toast.error(err.response.data))
+  const register = body => {
+    axios
+      .post("/auth/register", body)
+      .then(results => {
+        toast.success("Login Successful")
+        setUser(results.data)
+        history.push("/dashboard")
+      })
+      .catch(err => toast.error(err.response.data))
   }
   return (
     <Formik

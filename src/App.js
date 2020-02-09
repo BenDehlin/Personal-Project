@@ -18,7 +18,8 @@ const useStyles = createUseStyles({
     flexFlow: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    paddingBottom: 100
   }
 })
 

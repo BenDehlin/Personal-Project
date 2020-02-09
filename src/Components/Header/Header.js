@@ -39,7 +39,7 @@ const Header = ({ user, setUser, history, location }) => {
   }
 return (
   <header className={header}>
-    {location.pathname !== "/login" && location.pathname !== "/register" ? (
+    {location.pathname !== "/login" && location.pathname !== "/register" && user.id ? (
       <nav className={nav}>
         <Button 
         variant="contained"

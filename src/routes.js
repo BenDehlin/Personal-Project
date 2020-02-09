@@ -6,6 +6,7 @@ import Chat from './Components/Chat/Chat'
 import Register from './Components/Register/Register'
 import Login from './Components/Login/Login'
 import Forum from './Components/Forum/Forum'
+import About from './Components/About/About'
 
 export default (
   <Switch>
@@ -14,5 +15,6 @@ export default (
     <Route path = '/dashboard' component={Dashboard} />
     <Route path = '/chat/:room' component={Chat} />
     <Route path = '/forum/:id' component={Forum} />
+    <Route path = '/about' component={About} />
   </Switch>
 )
