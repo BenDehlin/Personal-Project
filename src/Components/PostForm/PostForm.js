@@ -24,24 +24,26 @@ const PostForm = ({ user, match, history, forum_id }) => {
   const user_id = user.id
 
   useEffect(() => {
-    if(match.params.id){
-      axios.get(`/api/posts/${match.params.id}`)
-      .then(results => {
-        const post = results.data[0]
-        if(user.id === post.user_id){
-          setPostTitle(post.post_title)
-          setPostContent(post.post_content)
-          setPostImg(post.post_img)
-        }
-      }).catch(err => console.log(err))
+    if (match.params.id) {
+      axios
+        .get(`/api/posts/${match.params.id}`)
+        .then(results => {
+          const post = results.data[0]
+          if (user.id === post.user_id) {
+            setPostTitle(post.post_title)
+            setPostContent(post.post_content)
+            setPostImg(post.post_img)
+          }
+        })
+        .catch(err => console.log(err))
     }
-  }, [match.params.id])
+  }, [match.params.id, user.id])
 
   const submitPost = body => {
     axios
       .post("/api/posts", body)
-      .then(() => history.push("/dashboard"))
-      .catch(err => console.log(err))
+      .then(() => history.push(`/forum/${forum_id}`))
+      .catch(err => toast.error(err.response.data))
   }
   return (
     <Formik
@@ -66,14 +68,24 @@ const PostForm = ({ user, match, history, forum_id }) => {
             <CustomTextField name="post_content" placeholder="Content *" />
           </div>
           {user && user.id && forum_id && (
-            <Button
-              disabled={isSubmitting}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Submit Post
-            </Button>
+            <div>
+              <Button
+                disabled={isSubmitting}
+                variant="contained"
+                color="secondary"
+                onClick={() => history.goBack()}
+              >
+                Back To Forum
+              </Button>
+              <Button
+                disabled={isSubmitting}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Submit Post
+              </Button>
+            </div>
           )}
           {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         </Form>

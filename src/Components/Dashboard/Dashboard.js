@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { getUser } from "../../redux/authReducer"
 import Button from "@material-ui/core/Button"
 import { createUseStyles } from "react-jss"
 import useAxios from "../../hooks/useAxios"
-import {page} from '../../global-styles/global-styles'
+import { page } from "../../global-styles/global-styles"
 
-// const {page} = globalStyles
 const useStyles = createUseStyles({
   dashboard: {
     ...page,
-    flexFlow: 'row',
-    minHeight: "80vh",
+    flexFlow: "row",
+    minHeight: "80vh"
   },
   side: {
     width: "100%",
@@ -23,35 +22,41 @@ const useStyles = createUseStyles({
   }
 })
 
-const Dashboard = ({ user, getUser, history }) => {
+const Dashboard = ({ user, history }) => {
   const classes = useStyles()
   const [forums, setForums] = useAxios("/api/forums")
-  useEffect(() => {
-    getUser()
-  }, [getUser])
-  console.log(user)
+  const [rooms, setRooms] = useAxios("/api/rooms/user")
+
+  console.log('hit dashboard')
   return (
     <div className={classes.dashboard}>
       {user && (
         <>
           <div className={classes.side}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => history.push("/chat/1")}
-            >
-              Chat 1
-            </Button>
+            {rooms &&
+              rooms.map(room => (
+                <Button
+                key={room.id}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => history.push(`/chat/${room.id}`)}
+                >
+                  Chat 1
+                </Button>
+              ))}
           </div>
           <div className={classes.side}>
-            {forums && forums.map(forum => (
-              <Button
-                key={forum.id}
-                variant="contained"
-                color="secondary"
-                onClick={() => history.push("/forum/1")}
-              >{forum.forum_name}</Button>
-            ))}
+            {forums &&
+              forums.map(forum => (
+                <Button
+                  key={forum.id}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => history.push(`/forum/${forum.id}`)}
+                >
+                  {forum.forum_name}
+                </Button>
+              ))}
           </div>
         </>
       )}

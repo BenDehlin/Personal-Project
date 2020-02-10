@@ -44,7 +44,7 @@ const Chat = ({ user, match }) => {
       setMessages((messages = [...messages, message]))
     })
     return () => {
-      // socket.emit("disconnect")
+      socket.emit("disconnect")
       // socket.off()
       socket.disconnect()
     }

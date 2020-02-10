@@ -5,6 +5,7 @@ import { createUseStyles } from "react-jss"
 import Button from "@material-ui/core/Button"
 import SmallPost from "../SmallPost/SmallPost"
 import {setForum} from '../../redux/forumReducer'
+import axios from 'axios'
 
 const useStyles = createUseStyles({
   forum: {
@@ -27,19 +28,24 @@ const Forum = ({ history, match, setForum }) => {
   const classes = useStyles()
   useEffect(() => {
     setForum(match.params.id)
-  }, [])
+  }, [setForum])
+  const getPosts = () => {
+    axios.get(`/api/forums/${match.params.id}`)
+    .then(results => setPosts(results.data))
+    .catch(err => console.log(err))
+  }
   return (
     <div className={classes.forum}>
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         onClick={() => history.push(`/post/form`)}
       >
         Create
       </Button>
       {posts &&
         posts.map(post => (
-          <SmallPost key={post.id} post={post} />
+          <SmallPost key={post.id} post={post} getPosts={getPosts} />
         ))}
     </div>
   )

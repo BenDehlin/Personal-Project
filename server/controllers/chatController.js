@@ -9,7 +9,7 @@ module.exports = {
     io.in(room).emit('message', {username: 'admin', message: `${username} has joined ${room}.`})
     socket.join(room)
   },
-  // disconnect: async(db, io) => {
-  //   io.emit('message', {username: 'admin', message: `user has left room.`})
-  // },
+  disconnect: async(db, io) => {
+    io.emit('message', {username: 'admin', message: `user has left room.`})
+  },
 }

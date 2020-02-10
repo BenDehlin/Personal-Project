@@ -17,6 +17,7 @@ const authCtrl = require("./controllers/authController")
 const chatCtrl = require("./controllers/chatController")
 const forumCtrl = require("./controllers/forumController")
 const postCtrl = require("./controllers/postController")
+const roomCtrl = require('./controllers/roomController')
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -53,7 +54,7 @@ massive(CONNECTION_STRING).then(db => {
     socket.on("join", (body, callback) =>
       chatCtrl.join(db, io, socket, body, callback)
     )
-    // socket.on('disconnect', () => chatCtrl.disconnect(db, io, socket))
+    socket.on('disconnect', () => chatCtrl.disconnect(db, io, socket))
   })
 })
 
@@ -67,9 +68,9 @@ app.get("/auth/user", authCtrl.getUser)
 //forum endpoint
 app.get("/api/forums", forumCtrl.getForums)
 app.post("/api/forums", forumCtrl.createForum)
-app.get("/api/forums/:id", forumCtrl.getPosts)
 
 //post endpoints
+app.get("/api/forums/:id", postCtrl.getPosts)
 app.get('/api/posts/:id', postCtrl.getPost)
 app.post("/api/posts", postCtrl.createPost)
 app.put("/api/posts/:id", postCtrl.editPost)
@@ -77,3 +78,6 @@ app.delete("/api/posts/:id", postCtrl.deletePost)
 
 //get user's chatrooms
 //chatroom endpoints
+app.get('/api/rooms', roomCtrl.getAllRooms)
+app.get('/api/rooms/user', roomCtrl.getUserRooms)
+app.post('/api/rooms', roomCtrl.createRoom)
