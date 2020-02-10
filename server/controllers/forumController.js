@@ -3,6 +3,7 @@ module.exports = {
     const db = req.app.get('db')
     db.forum.get_forums()
     .then(results => res.status(200).send(results))
+    .catch(err => res.status(500).send(err))
   },
   createForum: (req, res) => {
     const db = req.app.get('db')

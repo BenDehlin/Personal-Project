@@ -16,8 +16,8 @@ export default (
     <Route path = '/dashboard' component={Dashboard} />
     <Route path = '/chat/:room' component={Chat} />
     <Route path = '/forum/:id' component={Forum} />
-    <Route path = '/post/form/:forum_id' component={PostForm} />
-    <Route path = '/post/form/:forum_id/:id' component={PostForm} />
+    <Route exact path = '/post/form' component={PostForm} />
+    <Route path = '/post/form/:id' component={PostForm} />
     <Route path = '/about' component={About} />
   </Switch>
 )
