@@ -27,7 +27,6 @@ const Dashboard = ({ user, history }) => {
   const [forums, setForums] = useAxios("/api/forums")
   const [rooms, setRooms] = useAxios("/api/rooms/user")
 
-  console.log('hit dashboard')
   return (
     <div className={classes.dashboard}>
       {user && (

@@ -8,7 +8,7 @@ import axios from "axios"
 const useStyles = createUseStyles({
   smallPost: {
     minHeight: 150,
-    width: '90%',
+    width: "90%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
@@ -22,11 +22,11 @@ const useStyles = createUseStyles({
   },
   buttonSection: {
     minHeight: 150,
-    width: '20%',
-    display: 'flex',
-    flexFlow: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    width: "20%",
+    display: "flex",
+    flexFlow: "column",
+    justifyContent: "space-around",
+    alignItems: "center"
   }
 })
 
@@ -47,26 +47,31 @@ const SmallPost = ({ user, post, history, getPosts }) => {
       <div className={postSection}>
         <img src={post.post_img} alt={post.post_title} className={postImage} />
       </div>
-      {user && user.id === post.user_id ? (
-        <div className={buttonSection}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => history.push(`/post/form/${post.id}`)}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => deletePost(post.id)}
-          >
-            Delete
-          </Button>
-        </div>
-      ) : (
-        <div className={postSection}></div>
-      )}
+      <div className={buttonSection}>
+        {user && user.id === post.user_id && (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => history.push(`/post/form/${post.id}`)}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => deletePost(post.id)}
+            >
+              Delete
+            </Button>
+          </>
+        )}
+        <Button
+        variant="contained"
+        color="primary"
+        onClick={() => history.push(`/post/user`)}
+        >View Post</Button>
+      </div>
     </div>
   )
 }

@@ -24,7 +24,7 @@ const PostForm = ({ user, match, history, forum_id }) => {
   const user_id = user.id
 
   useEffect(() => {
-    if (match.params.id) {
+    if (user && user.id && match.params.id) {
       axios
         .get(`/api/posts/${match.params.id}`)
         .then(results => {
@@ -36,6 +36,8 @@ const PostForm = ({ user, match, history, forum_id }) => {
           }
         })
         .catch(err => console.log(err))
+    }else if(!user.id){
+      history.push('/login')
     }
   }, [match.params.id, user.id])
 

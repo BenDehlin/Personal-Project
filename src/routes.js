@@ -8,6 +8,7 @@ import Login from './Components/Login/Login'
 import Forum from './Components/Forum/Forum'
 import About from './Components/About/About'
 import PostForm from './Components/PostForm/PostForm'
+import BigPost from './Components/BigPost/BigPost'
 
 export default (
   <Switch>
@@ -17,6 +18,7 @@ export default (
     <Route path = '/chat/:room' component={Chat} />
     <Route path = '/forum/:id' component={Forum} />
     <Route exact path = '/post/form' component={PostForm} />
+    <Route exact path = '/post/:id' component={BigPost} />
     <Route path = '/post/form/:id' component={PostForm} />
     <Route path = '/about' component={About} />
   </Switch>
