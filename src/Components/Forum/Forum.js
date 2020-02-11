@@ -25,17 +25,17 @@ const useStyles = createUseStyles({
 
 const Forum = ({ history, match, setForum }) => {
   const [posts, setPosts] = useAxios(`/api/forums/${match.params.id}`)
-  const classes = useStyles()
+  const {forum} = useStyles()
   useEffect(() => {
     setForum(match.params.id)
-  }, [setForum])
+  }, [match.params.id, setForum])
   const getPosts = () => {
     axios.get(`/api/forums/${match.params.id}`)
     .then(results => setPosts(results.data))
     .catch(err => console.log(err))
   }
   return (
-    <div className={classes.forum}>
+    <section className={forum}>
       <Button
         variant="contained"
         color="primary"
@@ -47,7 +47,7 @@ const Forum = ({ history, match, setForum }) => {
         posts.map(post => (
           <SmallPost key={post.id} post={post} getPosts={getPosts} />
         ))}
-    </div>
+    </section>
   )
 }
 

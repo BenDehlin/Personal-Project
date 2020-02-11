@@ -7,6 +7,9 @@ import axios from "axios"
 
 const useStyles = createUseStyles({
   smallPost: {
+    border: '1px solid black',
+    margin: 5,
+    padding: 5,
     minHeight: 150,
     width: "90%",
     display: "flex",
@@ -48,15 +51,17 @@ const SmallPost = ({ user, post, history, getPosts }) => {
         <img src={post.post_img} alt={post.post_title} className={postImage} />
       </div>
       <div className={buttonSection}>
-        {user && user.id === post.user_id && (
+        {user && (user.id === post.user_id || user.is_admin) && (
           <>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push(`/post/form/${post.id}`)}
-            >
-              Edit
-            </Button>
+            {user.id === post.user_id && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => history.push(`/post/form/${post.id}`)}
+              >
+                Edit
+              </Button>
+            )}
             <Button
               variant="contained"
               color="secondary"
@@ -67,10 +72,12 @@ const SmallPost = ({ user, post, history, getPosts }) => {
           </>
         )}
         <Button
-        variant="contained"
-        color="primary"
-        onClick={() => history.push(`/post/user`)}
-        >View Post</Button>
+          variant="contained"
+          color="primary"
+          onClick={() => history.push(`/post/${post.id}`)}
+        >
+          View Post
+        </Button>
       </div>
     </div>
   )

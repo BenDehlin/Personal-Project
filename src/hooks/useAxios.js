@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
-const useAxios = (url) => {
+const useAxios = (url, initialData = []) => {
   console.log('hit useAxios')
-  const [axiosData, setAxiosData] = useState([])
+  const [axiosData, setAxiosData] = useState(initialData)
   useEffect(() => {
     axios.get(url)
     .then(results => setAxiosData(results.data))

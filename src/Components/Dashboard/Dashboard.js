@@ -24,8 +24,8 @@ const useStyles = createUseStyles({
 
 const Dashboard = ({ user, history }) => {
   const classes = useStyles()
-  const [forums, setForums] = useAxios("/api/forums")
-  const [rooms, setRooms] = useAxios("/api/rooms/user")
+  const [forums] = useAxios("/api/forums")
+  const [rooms] = useAxios("/api/rooms/user")
 
   return (
     <div className={classes.dashboard}>

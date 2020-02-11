@@ -28,6 +28,12 @@ const About = () => {
         <ul>
           <li>React-Redux</li>
           <li>React-Hooks</li>
+          <ul>
+            <li>useState</li>
+            <li>useEffect</li>
+            <li>useRef</li>
+            <li>custom hooks</li>
+          </ul>
         </ul>
         <li>HTTP calls - axios</li>
       </ul>

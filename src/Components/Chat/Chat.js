@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { connect } from "react-redux"
 import { getUser } from "../../redux/authReducer"
 import io from "socket.io-client"
@@ -38,8 +38,10 @@ const useStyles = createUseStyles({
 
 const Chat = ({ user, match, history }) => {
   const { chat, chatMessages, chatInput, chatInputField } = useStyles()
-  let [messages, setMessages] = useState([])
-  let [connected, setConnected] = useState(false)
+  // let [messages, setMessages] = useState([])
+  const messages = useRef([])
+  // let [connected, setConnected] = useState(false)
+  const connected = useRef(false)
   const [message, setMessage] = useState("")
   const ENDPOINT = "http://localhost:3333"
   const socket = io.connect(ENDPOINT)
@@ -48,7 +50,7 @@ const Chat = ({ user, match, history }) => {
     if (user && match.params.room && user.id) {
       axios.get("/api/rooms/user").then(async (results) => {
         await checkRooms(results)
-        if (!connected) {
+        if (!connected.current) {
           history.push("/dashboard")
         }
       })
@@ -57,7 +59,8 @@ const Chat = ({ user, match, history }) => {
       socket.emit("disconnect")
       // socket.off()
       socket.disconnect()
-      setConnected(connected = false)
+      connected.current = false
+      // setConnected(connected = false)
     }
   }, [match.params])
 
@@ -68,9 +71,11 @@ const Chat = ({ user, match, history }) => {
           username: user.username,
           room: match.params.room
         })
-        setConnected(connected = true)
+        connected.current = true
+        // setConnected(connected = true)
         socket.on("message", message => {
-          setMessages((messages = [...messages, message]))
+          messages.current = [...messages.current, message]
+          // setMessages((messages = [...messages, message]))
         })
       }
     })
@@ -101,7 +106,7 @@ const Chat = ({ user, match, history }) => {
       <div className={chatMessages}>
         <h1>Chat</h1>
         {messages &&
-          messages.map((element, index) => {
+          messages.current.map((element, index) => {
             return (
               <h2 key={index}>
                 {element.username}: {element.message}

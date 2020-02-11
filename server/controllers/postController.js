@@ -3,7 +3,9 @@ module.exports = {
     const db = req.app.get('db')
     const {id} = req.params
     db.post.get_post(id)
-    .then(results => res.status(200).send(results))
+    .then(results => {
+      console.log(results)
+      res.status(200).send(results)})
     .catch(err => res.status(500).send(err))
   },
   getPosts: (req, res) => {
