@@ -44,6 +44,11 @@ post_img VARCHAR(200),
 user_id INTEGER REFERENCES users(id),
 forum_id INTEGER REFERENCES forums(id));
 
+CREATE TABLE chatroom_join_request
+(id SERIAL PRIMARY KEY,
+chatroom_id INTEGER REFERENCES chatrooms(id),
+user_id INTEGER REFERENCES users(id),
+approved BOOLEAN);
 
 SELECT * FROM messages ORDER BY id DESC;
 SELECT * FROM users ORDER BY id DESC;

@@ -17,7 +17,11 @@ const authCtrl = require("./controllers/authController")
 const chatCtrl = require("./controllers/chatController")
 const forumCtrl = require("./controllers/forumController")
 const postCtrl = require("./controllers/postController")
-const roomCtrl = require('./controllers/roomController')
+const roomCtrl = require("./controllers/roomController")
+const userCtrl = require("./controllers/userController")
+
+//MIDDLEWARE
+const authMid = require("./middleware/authMiddleware")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -54,7 +58,7 @@ massive(CONNECTION_STRING).then(db => {
     socket.on("join", (body, callback) =>
       chatCtrl.join(db, io, socket, body, callback)
     )
-    socket.on('disconnect', () => chatCtrl.disconnect(db, io, socket))
+    socket.on("disconnect", () => chatCtrl.disconnect(db, io, socket))
   })
 })
 
@@ -67,17 +71,25 @@ app.get("/auth/user", authCtrl.getUser)
 
 //forum endpoint
 app.get("/api/forums", forumCtrl.getForums)
-app.post("/api/forums", forumCtrl.createForum)
+//not implemented
+app.post("/api/forums", authMid.adminsOnly, forumCtrl.createForum)
 
 //post endpoints
 app.get("/api/forums/:id", postCtrl.getPosts)
-app.get('/api/posts/:id', postCtrl.getPost)
+app.get("/api/posts/:id", postCtrl.getPost)
 app.post("/api/posts", postCtrl.createPost)
 app.put("/api/posts/:id", postCtrl.editPost)
 app.delete("/api/posts/:id", postCtrl.deletePost)
 
-//get user's chatrooms
 //chatroom endpoints
-app.get('/api/rooms', roomCtrl.getAllRooms)
-app.get('/api/rooms/user', roomCtrl.getUserRooms)
-app.post('/api/rooms', roomCtrl.createRoom)
+app.get("/api/rooms/user", authMid.usersOnly, roomCtrl.getUserRooms)
+app.get("/api/rooms/other", authMid.usersOnly, roomCtrl.getNotUserRooms)
+app.post('/api/rooms/join/:chatroom_id', authMid.usersOnly, roomCtrl.requestJoinRoom)
+//not implemented
+app.get("/api/rooms/all", roomCtrl.getAllRooms)
+app.post("/api/rooms", roomCtrl.createRoom)
+
+//admin user
+app.get("/admin/users", authMid.adminsOnly, userCtrl.getUsers)
+//not implemented
+app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)

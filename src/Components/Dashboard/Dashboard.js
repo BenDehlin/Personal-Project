@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button"
 import { createUseStyles } from "react-jss"
 import useAxios from "../../hooks/useAxios"
 import { page } from "../../global-styles/global-styles"
+import axios from 'axios'
+import {toast} from 'react-toastify'
 
 const useStyles = createUseStyles({
   dashboard: {
@@ -19,32 +21,60 @@ const useStyles = createUseStyles({
     flexFlow: "column",
     justifyContent: "center",
     alignItems: "center"
+  },
+  roomSection: {
+    border: "solid black 1px",
+    width: '100%'
   }
 })
 
 const Dashboard = ({ user, history }) => {
-  const classes = useStyles()
+  const { dashboard, side, roomSection } = useStyles()
   const [forums] = useAxios("/api/forums")
+  const [otherRooms] = useAxios("/api/rooms/other")
   const [rooms] = useAxios("/api/rooms/user")
 
+  const requestAccess = (chatroom_id) => {
+    axios.post(`/api/rooms/join/${chatroom_id}`)
+    .then((results) => toast.success(results.data))
+    .catch(err => console.log(err))
+  }
+
   return (
-    <div className={classes.dashboard}>
+    <div className={dashboard}>
       {user && (
         <>
-          <div className={classes.side}>
+          <div className={side}>
             {rooms &&
               rooms.map(room => (
-                <Button
-                key={room.id}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => history.push(`/chat/${room.id}`)}
-                >
-                  Chat 1
-                </Button>
+                <div className={roomSection}>
+                  <p>{room.chatroom_name}</p>
+                  <Button
+                    key={room.id}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => history.push(`/chat/${room.id}`)}
+                  >
+                    Join
+                  </Button>
+                </div>
+              ))}
+            {otherRooms &&
+              otherRooms.map(room => (
+                <div className={roomSection}>
+                  <p>{room.chatroom_name}</p>
+                  <Button
+                    key={room.id}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => requestAccess(room.id)}
+                  >
+                    Request Access
+                  </Button>
+                </div>
               ))}
           </div>
-          <div className={classes.side}>
+          <div className={side}>
             {forums &&
               forums.map(forum => (
                 <Button
