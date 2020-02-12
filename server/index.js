@@ -84,12 +84,24 @@ app.delete("/api/posts/:id", postCtrl.deletePost)
 //chatroom endpoints
 app.get("/api/rooms/user", authMid.usersOnly, roomCtrl.getUserRooms)
 app.get("/api/rooms/other", authMid.usersOnly, roomCtrl.getNotUserRooms)
-app.post('/api/rooms/join/:chatroom_id', authMid.usersOnly, roomCtrl.requestJoinRoom)
+app.post(
+  "/api/rooms/join/:chatroom_id",
+  authMid.usersOnly,
+  roomCtrl.requestJoinRoom
+)
 //not implemented
 app.get("/api/rooms/all", roomCtrl.getAllRooms)
 app.post("/api/rooms", roomCtrl.createRoom)
+app.post(
+  "/admin/rooms/:chatroom_id",
+  authMid.adminsOnly,
+  roomCtrl.approveUserRoom
+)
 
 //admin user
 app.get("/admin/users", authMid.adminsOnly, userCtrl.getUsers)
+app.get("/admin/user/:id", authMid.adminsOnly, userCtrl.getUser)
+app.post("/admin/room/approve", authMid.adminsOnly, roomCtrl.approveUserRoom)
+app.post('/admin/room/remove', authMid.adminsOnly, roomCtrl.removeUserRoom)
 //not implemented
 app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)

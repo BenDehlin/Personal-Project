@@ -47,10 +47,12 @@ const Chat = ({ user, match, history }) => {
   const socket = io.connect(ENDPOINT)
 
   useEffect(() => {
-    if (user && match.params.room && user.id) {
+    if (user && match.params.room && user.user_id) {
       axios.get("/api/rooms/user").then(async (results) => {
         await checkRooms(results)
         if (!connected.current) {
+          console.log('hit')
+          console.log(connected.current)
           history.push("/dashboard")
         }
       })
@@ -66,7 +68,9 @@ const Chat = ({ user, match, history }) => {
 
   const checkRooms = (res) => {
     res.data.forEach(room => {
-      if (+room.id === +match.params.room) {
+      console.log(room)
+      console.log(match.params.id)
+      if (+room.chatroom_id === +match.params.room) {
         socket.emit("join", {
           username: user.username,
           room: match.params.room

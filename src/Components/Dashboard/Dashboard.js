@@ -39,7 +39,8 @@ const Dashboard = ({ user, history }) => {
     .then((results) => toast.success(results.data))
     .catch(err => console.log(err))
   }
-
+  console.log(rooms)
+  console.log(otherRooms)
   return (
     <div className={dashboard}>
       {user && (
@@ -47,10 +48,10 @@ const Dashboard = ({ user, history }) => {
           <div className={side}>
             {rooms &&
               rooms.map(room => (
-                <div className={roomSection}>
+                <div className={roomSection} key={room.id}>
                   <p>{room.chatroom_name}</p>
                   <Button
-                    key={room.id}
+                    // key={room.id}
                     variant="contained"
                     color="primary"
                     onClick={() => history.push(`/chat/${room.id}`)}
