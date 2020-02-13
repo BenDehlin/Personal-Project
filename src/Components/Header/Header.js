@@ -5,7 +5,11 @@ import { setUser } from "../../redux/authReducer"
 import { createUseStyles } from "react-jss"
 import Button from "@material-ui/core/Button"
 import axios from "axios"
+import { TiHomeOutline } from "react-icons/ti"
+import { AiOutlineLogout, AiOutlineQuestion } from "react-icons/ai"
+import { variables } from "../../global-styles/global-styles"
 
+const { secondary } = variables
 const useStyles = createUseStyles({
   header: {
     backgroundColor: "#3f51b5",
@@ -20,11 +24,25 @@ const useStyles = createUseStyles({
     width: "50%",
     justifyContent: "space-around",
     alignItems: "center"
-  }
+  },
+  icons: {
+    color: secondary,
+    "&:hover": {
+      color: "white"
+    }
+  },
+  questionIcon: {
+    color: secondary,
+    borderRadius: '50%',
+    "&:hover": {
+      color: "white",
+      backgroundColor: secondary
+    }
+  },
 })
 
 const Header = ({ user, setUser, history, location }) => {
-  const { header, nav } = useStyles()
+  const { header, nav, icons, questionIcon } = useStyles()
   const logout = () => {
     axios
       .post("/auth/logout")
@@ -48,14 +66,25 @@ const Header = ({ user, setUser, history, location }) => {
       user &&
       user.id ? (
         <nav className={nav}>
-          <Button
-            variant="contained"
-            color="secondary"
+          <AiOutlineQuestion
+            className={questionIcon}
+            size={50}
+            onClick={() => history.push("/about")}
+          />
+          <TiHomeOutline
+            className={icons}
+            size={50}
             onClick={() => history.push("/dashboard")}
-          >
-            Home
-          </Button>
-          <Button
+          />
+          <AiOutlineLogout
+            className={icons}
+            size={50}
+            onClick={() => {
+              logout()
+              history.push("/login")
+            }}
+          />
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => {
@@ -64,8 +93,8 @@ const Header = ({ user, setUser, history, location }) => {
             }}
           >
             Logout
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => {
@@ -74,7 +103,7 @@ const Header = ({ user, setUser, history, location }) => {
             }}
           >
             About
-          </Button>
+          </Button> */}
         </nav>
       ) : (
         <nav className={nav}>
@@ -95,7 +124,12 @@ const Header = ({ user, setUser, history, location }) => {
               Login
             </Button>
           )}
-          <Button
+          <AiOutlineQuestion
+            className={questionIcon}
+            size={50}
+            onClick={() => history.push("/about")}
+          />
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => {
@@ -104,7 +138,7 @@ const Header = ({ user, setUser, history, location }) => {
             }}
           >
             About
-          </Button>
+          </Button> */}
         </nav>
       )}
     </header>

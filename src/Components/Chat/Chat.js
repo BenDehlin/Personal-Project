@@ -5,6 +5,7 @@ import io from "socket.io-client"
 import TextField from "@material-ui/core/TextField"
 import { createUseStyles } from "react-jss"
 import Button from "@material-ui/core/Button"
+import Icon from "@material-ui/core/Icon"
 import { page } from "../../global-styles/global-styles"
 import axios from "axios"
 import { toast } from "react-toastify"
@@ -118,12 +119,20 @@ const Chat = ({ user, match, history }) => {
           onChange={e => setMessage(e.target.value)}
           onKeyPress={e => (e.key === "Enter" ? sendMessage(e) : null)}
         />
+        {/* <Button
+          variant="contained"
+          color="primary"
+          // className={classes.button}
+          endIcon={<Icon>send</Icon>}
+        >
+          Send
+        </Button> */}
         <Button
           variant="contained"
           color="primary"
           onClick={e => sendMessage(e)}
         >
-          Send Message
+          Send
         </Button>
       </div>
     </div>

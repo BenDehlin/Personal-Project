@@ -10,7 +10,7 @@ import axios from 'axios'
 const useStyles = createUseStyles({
   forum: {
     backgroundColor: "white",
-    margin: { top: "5vh" },
+    margin: { top: "5vh", bottom: '5vh' },
     padding: 10,
     borderRadius: 10,
     width: "60vw",

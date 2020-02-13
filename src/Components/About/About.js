@@ -5,6 +5,7 @@ import { page } from "../../global-styles/global-styles"
 const useStyles = createUseStyles({
   about: {
     ...page,
+    margin: {bottom: '5vh'},
     paddingBottom: 20,
     paddingLeft: 20,
     textAlign: 'left',
@@ -59,6 +60,10 @@ const About = () => {
       <h2>Alert Messages:</h2>
       <ul>
         <li>React-toastify</li>
+      </ul>
+      <h2>Icons:</h2>
+      <ul>
+        <li>React-Icons</li>
       </ul>
     </div>
   )

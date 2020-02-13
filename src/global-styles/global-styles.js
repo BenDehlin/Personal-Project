@@ -13,7 +13,7 @@ export const page = {
   justifyContent: 'space-around',
   alignItems: 'center',
   width: '60vw',
-  minHeight: '60vh',
+  minHeight: '80vh',
   boxShadow: `.6em .6em .6em ${variables.primary}`
 }
 

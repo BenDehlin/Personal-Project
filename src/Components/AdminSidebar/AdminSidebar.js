@@ -24,11 +24,16 @@ const useStyles = createUseStyles({
     fontSize: 50
   },
   "@media (max-width: 1050px)": {
+    adminSidebar: {
+      width: "20vw",
+    },
+    adminSidebarPlaceholder: {
+      width: "20vw",
+    },
     heading: {
       fontSize: 20
     }
-  },
-  "@media (max-width: 850px)": {},
+  }
 })
 
 const AdminSidebar = ({ history }) => {
@@ -43,11 +48,11 @@ const AdminSidebar = ({ history }) => {
             color="primary"
             onClick={() => history.push("/admin/users")}
           >
-            View Users
+            View
           </Button>
-          <p className={heading}>Chatrooms</p>
+          <p className={heading}>Rooms</p>
           <Button variant="contained" color="primary">
-            View Rooms
+            View
           </Button>
       </div>
     </>

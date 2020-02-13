@@ -4,7 +4,6 @@ module.exports = {
     const {id} = req.params
     db.post.get_post(id)
     .then(results => {
-      console.log(results)
       res.status(200).send(results)})
     .catch(err => res.status(500).send(err))
   },

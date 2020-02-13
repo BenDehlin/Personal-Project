@@ -19,8 +19,7 @@ const useStyles = createUseStyles({
     flexFlow: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    minHeight: "100vh",
-    paddingBottom: 100
+    minHeight: "100vh"
   },
   sideBarLayout: {
     width: '100%',

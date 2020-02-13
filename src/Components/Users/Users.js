@@ -8,7 +8,8 @@ import useCheckAdmin from '../../hooks/useCheckAdmin'
 
 const useStyles = createUseStyles({
   usersPage: {
-    ...page
+    ...page,
+    margin: {bottom: '5vh'}
   }
 })
 
