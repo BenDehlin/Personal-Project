@@ -6,10 +6,12 @@ import { connect } from "react-redux"
 import Button from "@material-ui/core/Button"
 import { toast } from "react-toastify"
 import axios from "axios"
+import useCheckAdmin from '../../hooks/useCheckAdmin'
 
 const useStyles = createUseStyles({
   bigUser: {
-    ...page
+    ...page,
+    minHeight: '80vh'
   },
   bigUserSection: {
     width: "100%",
@@ -26,11 +28,7 @@ const useStyles = createUseStyles({
 })
 
 const BigUser = ({ user, match, history }) => {
-  useEffect(() => {
-    if (!user.is_admin) {
-      history.push("/dashboard")
-    }
-  }, [])
+  useCheckAdmin(user.is_admin, history.push)
   const { bigUser, bigUserSection, bigUserSide, roomSection } = useStyles()
   const [userPage, setUserPage] = useAxios(`/admin/user/${match.params.id}`)
   const {

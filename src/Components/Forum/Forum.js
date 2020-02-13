@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     margin: { top: "5vh" },
     padding: 10,
     borderRadius: 10,
-    width: "80%",
+    width: "60vw",
     minHeight: "80vh",
     boxShadow: ".6em .6em .6em blue",
     display: "flex",

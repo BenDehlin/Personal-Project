@@ -25,7 +25,9 @@ CREATE TABLE messages
 (id SERIAL PRIMARY KEY,
 message_content VARCHAR(200) NOT NULL,
 user_id INTEGER REFERENCES users(id),
-chatroom_id INTEGER REFERENCES chatrooms(id));
+chatroom_id INTEGER REFERENCES chatrooms(id),
+username VARCHAR(20),
+message_timestamp CURRENT_TIMESTAMP);
 
 CREATE TABLE chatroom_user_link
 (id SERIAL PRIMARY KEY,

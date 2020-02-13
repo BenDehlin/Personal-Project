@@ -1,10 +1,10 @@
-import React, {useEffect} from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { createUseStyles } from "react-jss"
 import useAxios from "../../hooks/useAxios"
 import { page } from "../../global-styles/global-styles"
-import { toast } from "react-toastify"
 import SmallUser from '../SmallUser/SmallUser'
+import useCheckAdmin from '../../hooks/useCheckAdmin'
 
 const useStyles = createUseStyles({
   usersPage: {
@@ -13,14 +13,9 @@ const useStyles = createUseStyles({
 })
 
 const Users = ({user, history}) => {
-  useEffect(() => {
-    if(!user.is_admin){
-      history.push('/dashboard')
-    }
-  }, [user.id, user.is_admin])
+  useCheckAdmin(user.is_admin, history.push)
   const { usersPage } = useStyles()
   const [users] = useAxios('/admin/users')
-  console.log(users)
   return (
     <div className={usersPage}>
       <h1>Users</h1>

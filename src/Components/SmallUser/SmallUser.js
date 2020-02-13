@@ -1,5 +1,7 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
+import Button from '@material-ui/core/Button'
+import {withRouter} from 'react-router-dom'
 
 const useStyles = createUseStyles({
   smallUser: {
@@ -19,9 +21,9 @@ const useStyles = createUseStyles({
   }
 })
 
-const SmallUser = ({ user }) => {
+const SmallUser = ({ user, history }) => {
   const { smallUser, smallUserSection } = useStyles()
-  const { username, first, last, img, age, email } = user
+  const { id, username, first, last, img, age, email } = user
   return (
     <div className={smallUser}>
       <div className={smallUserSection}>
@@ -39,10 +41,12 @@ const SmallUser = ({ user }) => {
         </div>
       </div>
         <div className={smallUserSection}>
-          
+        <Button variant="contained" color="primary" onClick={() => history.push(`/admin/user/${id}`)}>
+          View User
+        </Button>
         </div>
     </div>
   )
 }
 
-export default SmallUser
+export default withRouter(SmallUser)

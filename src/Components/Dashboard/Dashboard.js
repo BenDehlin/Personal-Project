@@ -23,8 +23,10 @@ const useStyles = createUseStyles({
     alignItems: "center"
   },
   roomSection: {
-    border: "solid black 1px",
-    width: '100%'
+    width: '80%',
+    margin: 10,
+    padding: 10,
+    border: '1px solid black'
   }
 })
 
@@ -39,8 +41,6 @@ const Dashboard = ({ user, history }) => {
     .then((results) => toast.success(results.data))
     .catch(err => console.log(err))
   }
-  console.log(rooms)
-  console.log(otherRooms)
   return (
     <div className={dashboard}>
       {user && (
@@ -48,13 +48,12 @@ const Dashboard = ({ user, history }) => {
           <div className={side}>
             {rooms &&
               rooms.map(room => (
-                <div className={roomSection} key={room.id}>
+                <div className={roomSection} key={room.chatroom_id}>
                   <p>{room.chatroom_name}</p>
                   <Button
-                    // key={room.id}
                     variant="contained"
                     color="primary"
-                    onClick={() => history.push(`/chat/${room.id}`)}
+                    onClick={() => history.push(`/chat/${room.chatroom_id}`)}
                   >
                     Join
                   </Button>
@@ -62,13 +61,13 @@ const Dashboard = ({ user, history }) => {
               ))}
             {otherRooms &&
               otherRooms.map(room => (
-                <div className={roomSection}>
+                <div className={roomSection} key={room.id}>
                   <p>{room.chatroom_name}</p>
                   <Button
-                    key={room.id}
                     variant="contained"
                     color="secondary"
-                    onClick={() => requestAccess(room.id)}
+                    onClick={() => {
+                      requestAccess(room.id)}}
                   >
                     Request Access
                   </Button>

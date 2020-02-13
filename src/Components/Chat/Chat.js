@@ -6,14 +6,12 @@ import TextField from "@material-ui/core/TextField"
 import { createUseStyles } from "react-jss"
 import Button from "@material-ui/core/Button"
 import { page } from "../../global-styles/global-styles"
-import ScrollToBottom from "react-scroll-to-bottom"
 import axios from "axios"
 import { toast } from "react-toastify"
 
 const useStyles = createUseStyles({
   chat: {
     ...page,
-    width: "80%",
     minHeight: "80vh",
     justifyContent: "space-between"
   },
@@ -38,48 +36,44 @@ const useStyles = createUseStyles({
 
 const Chat = ({ user, match, history }) => {
   const { chat, chatMessages, chatInput, chatInputField } = useStyles()
-  // let [messages, setMessages] = useState([])
   const messages = useRef([])
-  // let [connected, setConnected] = useState(false)
   const connected = useRef(false)
   const [message, setMessage] = useState("")
+  const [updateToggle, setUpdateToggle] = useState(false)
   const ENDPOINT = "http://localhost:3333"
   const socket = io.connect(ENDPOINT)
 
   useEffect(() => {
-    if (user && match.params.room && user.user_id) {
-      axios.get("/api/rooms/user").then(async (results) => {
+    if (user && match.params.room && user.id) {
+      axios.get("/api/rooms/user").then(async results => {
         await checkRooms(results)
         if (!connected.current) {
-          console.log('hit')
-          console.log(connected.current)
           history.push("/dashboard")
         }
       })
     }
     return () => {
       socket.emit("disconnect")
-      // socket.off()
       socket.disconnect()
       connected.current = false
-      // setConnected(connected = false)
     }
   }, [match.params])
 
-  const checkRooms = (res) => {
+  const checkRooms = res => {
     res.data.forEach(room => {
-      console.log(room)
-      console.log(match.params.id)
       if (+room.chatroom_id === +match.params.room) {
         socket.emit("join", {
           username: user.username,
           room: match.params.room
         })
         connected.current = true
-        // setConnected(connected = true)
         socket.on("message", message => {
-          messages.current = [...messages.current, message]
-          // setMessages((messages = [...messages, message]))
+          messages.current = [message.message, ...messages.current]
+          setUpdateToggle(!updateToggle)
+        })
+        socket.on("messages", incomingMessages => {
+          messages.current = [...incomingMessages.messages]
+          setUpdateToggle(!updateToggle)
         })
       }
     })
@@ -91,10 +85,9 @@ const Chat = ({ user, match, history }) => {
       socket.emit(
         "sendMessage",
         {
-          username: user.username,
+          user,
           message,
-          room: match.params.room,
-          id: user.id
+          room: match.params.room
         },
         () => {
           setMessage("")
@@ -106,19 +99,17 @@ const Chat = ({ user, match, history }) => {
   }
   return (
     <div className={chat}>
-      {/* <ScrollToBottom className={chatMessages}> */}
       <div className={chatMessages}>
         <h1>Chat</h1>
         {messages &&
           messages.current.map((element, index) => {
             return (
               <h2 key={index}>
-                {element.username}: {element.message}
+                {element.username}: {element.message_content}
               </h2>
             )
           })}
       </div>
-      {/* </ScrollToBottom> */}
       <div className={chatInput}>
         <TextField
           className={chatInputField}

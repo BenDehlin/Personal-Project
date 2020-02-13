@@ -7,7 +7,8 @@ import axios from "axios"
 
 const useStyles = createUseStyles({
   smallPost: {
-    border: '1px solid black',
+    border: "1px solid black",
+    borderRadius: 10,
     margin: 5,
     padding: 5,
     minHeight: 150,
@@ -30,7 +31,15 @@ const useStyles = createUseStyles({
     flexFlow: "column",
     justifyContent: "space-around",
     alignItems: "center"
-  }
+  },
+  "@media (max-width: 850px)": {
+    smallPost: {
+      flexFlow: 'column'
+    },
+    postImage: {
+      height: 100
+    }
+  },
 })
 
 const SmallPost = ({ user, post, history, getPosts }) => {
