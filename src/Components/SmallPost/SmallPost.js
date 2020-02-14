@@ -7,7 +7,8 @@ import axios from "axios"
 
 const useStyles = createUseStyles({
   smallPost: {
-    border: "1px solid black",
+    backgroundColor: 'black',
+    color: 'white',
     borderRadius: 10,
     margin: 5,
     padding: 5,

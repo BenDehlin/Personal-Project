@@ -19,6 +19,7 @@ const forumCtrl = require("./controllers/forumController")
 const postCtrl = require("./controllers/postController")
 const roomCtrl = require("./controllers/roomController")
 const userCtrl = require("./controllers/userController")
+const roomAdminCtrl = require("./controllers/roomAdminController")
 
 //MIDDLEWARE
 const authMid = require("./middleware/authMiddleware")
@@ -89,19 +90,28 @@ app.post(
   authMid.usersOnly,
   roomCtrl.requestJoinRoom
 )
-//not implemented
 app.get("/api/rooms/all", roomCtrl.getAllRooms)
-app.post("/api/rooms", roomCtrl.createRoom)
+//not implemented
+app.post("/api/rooms", authMid.adminsOnly, roomAdminCtrl.createRoom)
 app.post(
   "/admin/rooms/:chatroom_id",
   authMid.adminsOnly,
-  roomCtrl.approveUserRoom
+  roomAdminCtrl.approveUserRoom
 )
 
 //admin user
 app.get("/admin/users", authMid.adminsOnly, userCtrl.getUsers)
 app.get("/admin/user/:id", authMid.adminsOnly, userCtrl.getUser)
-app.post("/admin/room/approve", authMid.adminsOnly, roomCtrl.approveUserRoom)
-app.post('/admin/room/remove', authMid.adminsOnly, roomCtrl.removeUserRoom)
+app.post(
+  "/admin/room/approve",
+  authMid.adminsOnly,
+  roomAdminCtrl.approveUserRoom
+)
+app.post("/admin/room/remove", authMid.adminsOnly, roomAdminCtrl.removeUserRoom)
+app.get(
+  "/admin/room/users/:chatroom_id",
+  authMid.adminsOnly,
+  roomAdminCtrl.getUsersInRoom
+)
 //not implemented
 app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)

@@ -19,14 +19,16 @@ const useStyles = createUseStyles({
     height: "100%",
     display: "flex",
     flexFlow: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center"
   },
   roomSection: {
     width: '80%',
     margin: 10,
     padding: 10,
-    border: '1px solid black'
+    backgroundColor: 'black',
+    color: 'white',
+    borderRadius: 10,
   }
 })
 
@@ -46,6 +48,7 @@ const Dashboard = ({ user, history }) => {
       {user && (
         <>
           <div className={side}>
+        <h1>Rooms: </h1>
             {rooms &&
               rooms.map(room => (
                 <div className={roomSection} key={room.chatroom_id}>
@@ -75,6 +78,7 @@ const Dashboard = ({ user, history }) => {
               ))}
           </div>
           <div className={side}>
+            <h1>Forums:</h1>
             {forums &&
               forums.map(forum => (
                 <Button

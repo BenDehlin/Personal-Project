@@ -6,16 +6,18 @@ import Button from "@material-ui/core/Button"
 import SmallPost from "../SmallPost/SmallPost"
 import {setForum} from '../../redux/forumReducer'
 import axios from 'axios'
+import { page } from "../../global-styles/global-styles"
 
 const useStyles = createUseStyles({
   forum: {
+    ...page,
     backgroundColor: "white",
     margin: { top: "5vh", bottom: '5vh' },
     padding: 10,
     borderRadius: 10,
     width: "60vw",
     minHeight: "80vh",
-    boxShadow: ".6em .6em .6em blue",
+    // boxShadow: ".6em .6em .6em blue",
     display: "flex",
     flexFlow: 'column',
     justifyContent: "space-around",

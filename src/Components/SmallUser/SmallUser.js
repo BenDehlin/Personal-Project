@@ -5,12 +5,16 @@ import {withRouter} from 'react-router-dom'
 
 const useStyles = createUseStyles({
   smallUser: {
-    width: "100%",
+    backgroundColor: 'black',
+    color: 'white',
+    borderRadius: 10,
+    width: "80%",
     display: "flex",
     flexFlow: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10
+    padding: 10,
+    margin: 10
   },
   smallUserSection: {
     width: "100%",
@@ -18,6 +22,12 @@ const useStyles = createUseStyles({
     flexFlow: "row",
     justifyContent: "space-around",
     padding: 10
+  },
+  "@media (max-width: 1050px)": {
+    smallUserSection: {
+      flexFlow: 'column',
+      alignItems: 'center'
+    }
   }
 })
 

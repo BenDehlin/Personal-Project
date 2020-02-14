@@ -1,6 +1,8 @@
 export const variables = {
-  primary: '#3f51b5',
+  primary: 'black',
   secondary: '#f50057',
+  blue: '#3f51b5',
+  red: '#f50057',
   maxWidth: 850
 }
 

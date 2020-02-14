@@ -12,7 +12,7 @@ import { variables } from "../../global-styles/global-styles"
 const { secondary } = variables
 const useStyles = createUseStyles({
   header: {
-    backgroundColor: "#3f51b5",
+    backgroundColor: variables.primary,
     display: "flex",
     width: "100%",
     height: "10vh",
@@ -33,12 +33,12 @@ const useStyles = createUseStyles({
   },
   questionIcon: {
     color: secondary,
-    borderRadius: '50%',
+    borderRadius: "50%",
     "&:hover": {
       color: "white",
       backgroundColor: secondary
     }
-  },
+  }
 })
 
 const Header = ({ user, setUser, history, location }) => {
@@ -84,29 +84,14 @@ const Header = ({ user, setUser, history, location }) => {
               history.push("/login")
             }}
           />
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              logout()
-              history.push("/login")
-            }}
-          >
-            Logout
-          </Button> */}
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              logout()
-              history.push("/about")
-            }}
-          >
-            About
-          </Button> */}
         </nav>
       ) : (
         <nav className={nav}>
+          <AiOutlineQuestion
+            className={questionIcon}
+            size={50}
+            onClick={() => history.push("/about")}
+          />
           {location.pathname === "/login" ? (
             <Button
               variant="contained"
@@ -124,21 +109,6 @@ const Header = ({ user, setUser, history, location }) => {
               Login
             </Button>
           )}
-          <AiOutlineQuestion
-            className={questionIcon}
-            size={50}
-            onClick={() => history.push("/about")}
-          />
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              logout()
-              history.push("/about")
-            }}
-          >
-            About
-          </Button> */}
         </nav>
       )}
     </header>

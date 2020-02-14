@@ -11,6 +11,7 @@ import PostForm from './Components/PostForm/PostForm'
 import BigPost from './Components/BigPost/BigPost'
 import Users from './Components/Users/Users'
 import BigUser from './Components/BigUser/BigUser'
+import Rooms from './Components/Rooms/Rooms'
 
 export default (
   <Switch>
@@ -25,5 +26,6 @@ export default (
     <Route path = '/about' component={About} />
     <Route path = '/admin/users' component= {Users} />
     <Route path = '/admin/user/:id' component={BigUser} />
+    <Route path = '/admin/rooms' component={Rooms} />
   </Switch>
 )
