@@ -12,6 +12,7 @@ import BigPost from './Components/BigPost/BigPost'
 import Users from './Components/Users/Users'
 import BigUser from './Components/BigUser/BigUser'
 import Rooms from './Components/Rooms/Rooms'
+import Minesweeper from './Components/Minesweeper/Game/Game'
 
 export default (
   <Switch>
@@ -27,5 +28,6 @@ export default (
     <Route path = '/admin/users' component= {Users} />
     <Route path = '/admin/user/:id' component={BigUser} />
     <Route path = '/admin/rooms' component={Rooms} />
+    <Route path = '/minesweeper' component={Minesweeper} />
   </Switch>
 )

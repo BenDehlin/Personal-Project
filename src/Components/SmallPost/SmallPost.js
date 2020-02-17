@@ -8,6 +8,7 @@ import axios from "axios"
 const useStyles = createUseStyles({
   smallPost: {
     backgroundColor: 'black',
+    border: '1px solid black',
     color: 'white',
     borderRadius: 10,
     margin: 5,
@@ -16,7 +17,11 @@ const useStyles = createUseStyles({
     width: "90%",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    '&:hover':{
+      backgroundColor: 'white',
+      color: 'black'
+    },
   },
   postSection: {
     minHeight: 150,

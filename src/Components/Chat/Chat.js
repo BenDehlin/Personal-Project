@@ -5,10 +5,11 @@ import io from "socket.io-client"
 import TextField from "@material-ui/core/TextField"
 import { createUseStyles } from "react-jss"
 import Button from "@material-ui/core/Button"
-import Icon from "@material-ui/core/Icon"
 import { page } from "../../global-styles/global-styles"
 import axios from "axios"
 import { toast } from "react-toastify"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
+// import Icon from "@material-ui/core/Icon"
 
 const useStyles = createUseStyles({
   chat: {
@@ -105,7 +106,7 @@ const Chat = ({ user, match, history }) => {
         {messages &&
           messages.current.map((element, index) => {
             return (
-              <h2 key={index}>
+              <h2>
                 {element.username}: {element.message_content}
               </h2>
             )

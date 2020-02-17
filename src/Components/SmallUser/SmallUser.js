@@ -2,10 +2,13 @@ import React from "react"
 import { createUseStyles } from "react-jss"
 import Button from '@material-ui/core/Button'
 import {withRouter} from 'react-router-dom'
+import {variables} from '../../global-styles/global-styles'
 
+const {primary, secondary} = variables
 const useStyles = createUseStyles({
   smallUser: {
-    backgroundColor: 'black',
+    backgroundColor: primary,
+    border: `1px solid ${primary}`,
     color: 'white',
     borderRadius: 10,
     width: "80%",
@@ -14,14 +17,19 @@ const useStyles = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    margin: 10
+    margin: 10,
+    '&:hover': {
+      backgroundColor: secondary,
+      color: primary
+    }
   },
   smallUserSection: {
     width: "100%",
     display: "flex",
     flexFlow: "row",
     justifyContent: "space-around",
-    padding: 10
+    padding: 10,
+    
   },
   "@media (max-width: 1050px)": {
     smallUserSection: {

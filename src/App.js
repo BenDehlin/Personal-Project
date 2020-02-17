@@ -10,10 +10,10 @@ import { variables } from "./global-styles/global-styles"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-const { secondary } = variables
+const { red } = variables
 const useStyles = createUseStyles({
   app: {
-    backgroundColor: secondary,
+    backgroundColor: red,
     textAlign: "center",
     display: "flex",
     flexFlow: "column",

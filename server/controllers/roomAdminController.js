@@ -6,6 +6,13 @@ module.exports = {
     .then(results => res.status(200).send(results))
     .catch(err => res.status(500).send(err))
   },
+  getJoinRequestsForRoom: (req, res) => {
+    const db = req.app.get('db')
+    const {chatroom_id} = req.params
+    db.room.get_join_requests_for_room(chatroom_id)
+    .then(results => res.status(200).send(results))
+    .catch(err => res.status(500).send(err))
+  },
   approveUserRoom: (req, res) => {
     const db = req.app.get("db")
     const { user_id, chatroom_id } = req.body

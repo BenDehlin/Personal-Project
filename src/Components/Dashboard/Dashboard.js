@@ -5,8 +5,8 @@ import Button from "@material-ui/core/Button"
 import { createUseStyles } from "react-jss"
 import useAxios from "../../hooks/useAxios"
 import { page } from "../../global-styles/global-styles"
-import axios from 'axios'
-import {toast} from 'react-toastify'
+import axios from "axios"
+import { toast } from "react-toastify"
 
 const useStyles = createUseStyles({
   dashboard: {
@@ -23,12 +23,17 @@ const useStyles = createUseStyles({
     alignItems: "center"
   },
   roomSection: {
-    width: '80%',
+    border: '1px solid black',
+    '&:hover':{
+      backgroundColor: 'white',
+      color: 'black'
+    },
+    width: "80%",
     margin: 10,
     padding: 10,
-    backgroundColor: 'black',
-    color: 'white',
-    borderRadius: 10,
+    backgroundColor: "black",
+    color: "white",
+    borderRadius: 10
   }
 })
 
@@ -38,17 +43,18 @@ const Dashboard = ({ user, history }) => {
   const [otherRooms] = useAxios("/api/rooms/other")
   const [rooms] = useAxios("/api/rooms/user")
 
-  const requestAccess = (chatroom_id) => {
-    axios.post(`/api/rooms/join/${chatroom_id}`)
-    .then((results) => toast.success(results.data))
-    .catch(err => console.log(err))
+  const requestAccess = chatroom_id => {
+    axios
+      .post(`/api/rooms/join/${chatroom_id}`)
+      .then(results => toast.success(results.data))
+      .catch(err => console.log(err))
   }
   return (
     <div className={dashboard}>
       {user && (
         <>
           <div className={side}>
-        <h1>Rooms: </h1>
+            <h1>Rooms: </h1>
             {rooms &&
               rooms.map(room => (
                 <div className={roomSection} key={room.chatroom_id}>
@@ -70,7 +76,8 @@ const Dashboard = ({ user, history }) => {
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                      requestAccess(room.id)}}
+                      requestAccess(room.id)
+                    }}
                   >
                     Request Access
                   </Button>
@@ -81,14 +88,17 @@ const Dashboard = ({ user, history }) => {
             <h1>Forums:</h1>
             {forums &&
               forums.map(forum => (
-                <Button
-                  key={forum.id}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => history.push(`/forum/${forum.id}`)}
-                >
-                  {forum.forum_name}
-                </Button>
+                <div className={roomSection} key={forum.id}>
+                  <p>{forum.forum_name}</p>
+                  <Button
+                    key={forum.id}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => history.push(`/forum/${forum.id}`)}
+                  >
+                    View
+                  </Button>
+                </div>
               ))}
           </div>
         </>

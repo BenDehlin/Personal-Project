@@ -92,6 +92,8 @@ app.post(
 )
 app.get("/api/rooms/all", roomCtrl.getAllRooms)
 //not implemented
+// app.get('/api/room/:chatroom_id', authMid.adminsOnly, roomAdminCtrl.getRoom)
+app.get('/api/room/requests/:chatroom_id', authMid.adminsOnly, roomAdminCtrl.getJoinRequestsForRoom)
 app.post("/api/rooms", authMid.adminsOnly, roomAdminCtrl.createRoom)
 app.post(
   "/admin/rooms/:chatroom_id",

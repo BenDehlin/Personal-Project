@@ -9,10 +9,10 @@ import { TiHomeOutline } from "react-icons/ti"
 import { AiOutlineLogout, AiOutlineQuestion } from "react-icons/ai"
 import { variables } from "../../global-styles/global-styles"
 
-const { secondary } = variables
+const { primary, secondary, red } = variables
 const useStyles = createUseStyles({
   header: {
-    backgroundColor: variables.primary,
+    backgroundColor: primary,
     display: "flex",
     width: "100%",
     height: "10vh",
@@ -26,16 +26,15 @@ const useStyles = createUseStyles({
     alignItems: "center"
   },
   icons: {
-    color: secondary,
+    color: red,
     "&:hover": {
-      color: "white"
+      color: secondary
     }
   },
   questionIcon: {
-    color: secondary,
+    color: red,
     borderRadius: "50%",
     "&:hover": {
-      color: "white",
       backgroundColor: secondary
     }
   }
