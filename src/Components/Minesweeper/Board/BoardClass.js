@@ -41,13 +41,17 @@ class BoardClass extends Component {
 
   clickCell = (x, y) => {
     const { neighbors } = this.state
-    const { grid, rows, columns } = this.props
+    const { grid, rows, columns, pause, setScore, submitScore } = this.props
     const newGrid = [...grid]
     if (newGrid[x][y].isClicked || newGrid[x][y].isFlagged) {
       return
     }
     if (newGrid[x][y].isBomb) {
+      submitScore()
       this.revealBoard()
+      pause()
+    }else{
+      setScore((prevScore) => prevScore + 1)
     }
     const newCount = this.checkNeighbors(x, y)
     newGrid[x][y].count = newCount

@@ -1,20 +1,26 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
 import { IoIosRefreshCircle } from "react-icons/io"
-import {variables} from '../../../global-styles/global-styles'
-const {primary, secondary, red, blue} = variables
+import { variables } from "../../../global-styles/global-styles"
+const { primary, secondary, red, blue } = variables
 
 const useStyles = createUseStyles({
   header: {
     backgroundColor: "black",
     border: `2px solid ${secondary}`,
     width: 500,
-    // minHeight: 100,
     display: "flex",
-    flexFlow: "column",
-    justifyContent: "center",
+    flexFlow: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     color: "white"
+  },
+  headerSection: {
+    width: "30%",
+    display: "flex",
+    flexFlow: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   h1: {
     margin: 10
@@ -24,23 +30,43 @@ const useStyles = createUseStyles({
     borderRadius: "50%",
     marginBottom: 10,
     "&:hover": {
-      backgroundColor: 'red'
+      backgroundColor: "red"
     }
   }
 })
 
-const BoardHeader = ({ flags, reset }) => {
-  const { header, h1, icon } = useStyles()
+const BoardHeader = ({
+  flags,
+  resetBoard,
+  minutes,
+  seconds,
+  score,
+  highScore
+}) => {
+  const { header, h1, icon, headerSection } = useStyles()
+
   return (
     <div className={header}>
-      <h1 className={h1}>BOMBS: {flags}</h1>
+      <div className={headerSection}>
+        <h3 className={h1}>High Score: {highScore.score}</h3>
+        <h3 className={h1}>SCORE: {score < 10 ? "0" + score : score}</h3>
+      </div>
       <IoIosRefreshCircle
         size={50}
         className={icon}
         onClick={() => {
-          reset()
+          resetBoard()
         }}
       />
+      <div className={headerSection}>
+        <h3 className={h1}>
+          Time: {minutes > 0 && minutes + ":"}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </h3>
+        <h3 className={h1}>
+          FLAGS: {flags < 10 && flags >= 0 ? "0" + flags : flags}
+        </h3>
+      </div>
     </div>
   )
 }

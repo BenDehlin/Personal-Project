@@ -20,6 +20,8 @@ const postCtrl = require("./controllers/postController")
 const roomCtrl = require("./controllers/roomController")
 const userCtrl = require("./controllers/userController")
 const roomAdminCtrl = require("./controllers/roomAdminController")
+const gameCtrl = require('./controllers/gameController')
+const minesweeperCtrl = require('./controllers/minesweeperController')
 
 //MIDDLEWARE
 const authMid = require("./middleware/authMiddleware")
@@ -117,3 +119,11 @@ app.get(
 )
 //not implemented
 app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)
+
+//game endpoints
+app.get('/api/games/all', authMid.usersOnly, gameCtrl.getAllGames)
+
+//minesweeper endpoints
+app.get('/api/minesweeper/score/high', authMid.usersOnly, minesweeperCtrl.getHighScore)
+app.post('/api/minesweeper/score/new', authMid.usersOnly, minesweeperCtrl.setScore)
+app.get('/api/minesweeper/score/high/all', authMid.usersOnly, minesweeperCtrl.getAllHighScores)

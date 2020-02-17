@@ -9,6 +9,9 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 const useStyles = createUseStyles({
+  dashboardContainer: {
+    paddingBottom: 20
+  },
   dashboard: {
     ...page,
     flexFlow: "row",
@@ -23,10 +26,10 @@ const useStyles = createUseStyles({
     alignItems: "center"
   },
   roomSection: {
-    border: '1px solid black',
-    '&:hover':{
-      backgroundColor: 'white',
-      color: 'black'
+    border: "1px solid black",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
     },
     width: "80%",
     margin: 10,
@@ -38,10 +41,11 @@ const useStyles = createUseStyles({
 })
 
 const Dashboard = ({ user, history }) => {
-  const { dashboard, side, roomSection } = useStyles()
+  const { dashboard, side, roomSection, dashboardContainer } = useStyles()
   const [forums] = useAxios("/api/forums")
   const [otherRooms] = useAxios("/api/rooms/other")
   const [rooms] = useAxios("/api/rooms/user")
+  const [games] = useAxios("/api/games/all")
 
   const requestAccess = chatroom_id => {
     axios
@@ -50,58 +54,91 @@ const Dashboard = ({ user, history }) => {
       .catch(err => console.log(err))
   }
   return (
-    <div className={dashboard}>
+    <div className={dashboardContainer}>
+      <div className={dashboard}>
+        {user && (
+          <>
+            <div className={side}>
+              <h1>Rooms: </h1>
+              {rooms &&
+                rooms.map(room => (
+                  <div className={roomSection} key={room.chatroom_id}>
+                    <p>{room.chatroom_name}</p>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => history.push(`/chat/${room.chatroom_id}`)}
+                    >
+                      Join
+                    </Button>
+                  </div>
+                ))}
+              {otherRooms &&
+                otherRooms.map(room => (
+                  <div className={roomSection} key={room.id}>
+                    <p>{room.chatroom_name}</p>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => {
+                        requestAccess(room.id)
+                      }}
+                    >
+                      Request Access
+                    </Button>
+                  </div>
+                ))}
+            </div>
+            <div className={side}>
+              <h1>Forums:</h1>
+              {forums &&
+                forums.map(forum => (
+                  <div className={roomSection} key={forum.id}>
+                    <p>{forum.forum_name}</p>
+                    <Button
+                      key={forum.id}
+                      variant="contained"
+                      color="primary"
+                      onClick={() => history.push(`/forum/${forum.id}`)}
+                    >
+                      View
+                    </Button>
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
+      </div>
       {user && (
-        <>
+        <div className={dashboard}>
           <div className={side}>
-            <h1>Rooms: </h1>
-            {rooms &&
-              rooms.map(room => (
-                <div className={roomSection} key={room.chatroom_id}>
-                  <p>{room.chatroom_name}</p>
-                  <Button
+            <h1>Games:</h1>
+            {games &&
+              games.map(game => (
+                <div
+                  className={roomSection}
+                  key={game.id}
+                  onClick={() => history.push(`/games/${game.game_name}`)}
+                >
+                  <h1>{game.game_name}</h1>
+                  {/* <Button
+                    key={game.id}
                     variant="contained"
                     color="primary"
-                    onClick={() => history.push(`/chat/${room.chatroom_id}`)}
+                    onClick={() => history.push(`/games/${game.game_name}`)}
                   >
-                    Join
-                  </Button>
-                </div>
-              ))}
-            {otherRooms &&
-              otherRooms.map(room => (
-                <div className={roomSection} key={room.id}>
-                  <p>{room.chatroom_name}</p>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                      requestAccess(room.id)
-                    }}
-                  >
-                    Request Access
-                  </Button>
+                    Play!
+                  </Button> */}
                 </div>
               ))}
           </div>
           <div className={side}>
-            <h1>Forums:</h1>
-            {forums &&
-              forums.map(forum => (
-                <div className={roomSection} key={forum.id}>
-                  <p>{forum.forum_name}</p>
-                  <Button
-                    key={forum.id}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => history.push(`/forum/${forum.id}`)}
-                  >
-                    View
-                  </Button>
-                </div>
-              ))}
+            <h1>High Scores:</h1>
+            {games && games.map(game => (
+              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/${game.game_name}`)}></div>
+            ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   )

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react"
 import BoardHeader from "../BoardHeader/BoardHeader"
 import BoardClass from "../Board/BoardClass"
-import {createUseStyles} from 'react-jss'
-import {page} from '../../../global-styles/global-styles'
+import { createUseStyles } from "react-jss"
+import { page } from "../../../global-styles/global-styles"
+import { useStopwatch } from "react-timer-hook"
+import useAxios from '../../../hooks/useAxios'
+import axios from 'axios'
 
 const useStyles = createUseStyles({
   gameStyle: {
     ...page,
-    marginTop: 5,
+    margin: 5,
     padding: 10,
     marginBottom: 20
   }
 })
 
 const Game = () => {
-  const {gameStyle} = useStyles()
+  const { gameStyle } = useStyles()
   const [rows, setRows] = useState(10)
   const [columns, setColumns] = useState(10)
   const [bombs, setBombs] = useState(25)
   const [flags, setFlags] = useState(25)
+  const [score, setScore] = useState(0)
+  const [highScore, setHighScore] = useAxios('/api/minesweeper/score/high')
+  const { seconds, minutes, hours, days, start, pause, reset } = useStopwatch({
+    autoStart: true
+  })
   //Need to figure out making this immutable again with useRef or external library
   let [grid, setGrid] = useState([])
 
@@ -31,6 +39,7 @@ const Game = () => {
     setColumns(numColumns)
     setBombs(numBombs)
     setFlags(numFlags)
+    setScore(0)
     await genGrid(numRows, numColumns)
     await genBombs(numRows, numColumns, numBombs)
   }
@@ -61,8 +70,10 @@ const Game = () => {
     setGrid(newGrid)
   }
 
-  const reset = () => {
+  const resetBoard = () => {
     genBoard(10, 10, 25, 25)
+    reset()
+    start()
   }
 
   const incrementFlags = () => {
@@ -72,17 +83,23 @@ const Game = () => {
     setFlags(flags - 1)
   }
 
+  const submitScore = () => {
+    const time = minutes * 60 + seconds
+    axios.post('/api/minesweeper/score/new', {score, time})
+    .then(results => setHighScore(results.data))
+    .catch(err => console.log(err))
+  }
+
   return (
-    <div
-    className={gameStyle}
-      // style={{
-      //   display: "flex",
-      //   flexFlow: "column",
-      //   alignItems: "center",
-      //   margin: 10
-      // }}
-    >
-      <BoardHeader flags={flags} reset={reset} />
+    <div className={gameStyle}>
+      <BoardHeader
+        flags={flags}
+        resetBoard={resetBoard}
+        minutes={minutes}
+        seconds={seconds}
+        score={score}
+        highScore={highScore}
+      />
       <BoardClass
         rows={rows}
         columns={columns}
@@ -90,6 +107,10 @@ const Game = () => {
         grid={grid}
         incrementFlags={incrementFlags}
         decrementFlags={decrementFlags}
+        pause={pause}
+        setScore={setScore}
+        score={score}
+        submitScore={submitScore}
       />
     </div>
   )

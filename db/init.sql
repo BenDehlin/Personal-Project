@@ -52,6 +52,16 @@ chatroom_id INTEGER REFERENCES chatrooms(id),
 user_id INTEGER REFERENCES users(id),
 approved BOOLEAN);
 
+CREATE TABLE games 
+(id SERIAL PRIMARY KEY,
+game_name VARCHAR(20));
+
+CREATE TABLE scores
+(id SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES users(id),
+score INTEGER,
+time INTEGER);
+
 SELECT * FROM messages ORDER BY id DESC;
 SELECT * FROM users ORDER BY id DESC;
 SELECT * FROM chatrooms ORDER BY id DESC;
