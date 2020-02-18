@@ -15,12 +15,23 @@ const useStyles = createUseStyles({
     marginBottom: 20
   },
   scoreStyle: {
-    width: "100%",
+    // width: "100%",
     display: "grid",
     gridTemplateColumns: "repeat(4, 1fr)",
     gridTemplateRows: "1fr",
     gridColumnGap: 0,
-    gridRowGap: 0
+    gridRowGap: 0,
+    border: "1px solid black",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    },
+    width: "80%",
+    margin: 10,
+    padding: 10,
+    backgroundColor: "black",
+    color: "white",
+    borderRadius: 10
   }
 })
 

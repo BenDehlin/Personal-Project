@@ -44,7 +44,7 @@ const About = () => {
         <li>form basic style: Material-ui</li>
         <li>form validation schema: Yup</li>
       </ul>
-      <h2>CSS in JS:</h2>
+      <h2>CSS in JS/Styling:</h2>
       <ul>
         <li>JSS</li>
         <li>React-JSS</li>

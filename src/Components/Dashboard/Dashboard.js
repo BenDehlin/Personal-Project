@@ -121,21 +121,15 @@ const Dashboard = ({ user, history }) => {
                   onClick={() => history.push(`/games/${game.game_name}`)}
                 >
                   <h1>{game.game_name}</h1>
-                  {/* <Button
-                    key={game.id}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => history.push(`/games/${game.game_name}`)}
-                  >
-                    Play!
-                  </Button> */}
                 </div>
               ))}
           </div>
           <div className={side}>
             <h1>High Scores:</h1>
             {games && games.map(game => (
-              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/${game.game_name}`)}></div>
+              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/${game.game_name}`)}>
+                <h1>{game.game_name}</h1>
+              </div>
             ))}
           </div>
         </div>
