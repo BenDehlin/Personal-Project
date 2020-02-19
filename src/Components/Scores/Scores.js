@@ -15,7 +15,6 @@ const useStyles = createUseStyles({
     marginBottom: 20
   },
   scoreStyle: {
-    // width: "100%",
     display: "grid",
     gridTemplateColumns: "repeat(4, 1fr)",
     gridTemplateRows: "1fr",
@@ -26,7 +25,6 @@ const useStyles = createUseStyles({
       backgroundColor: "white",
       color: "black"
     },
-    width: "80%",
     margin: 10,
     padding: 10,
     backgroundColor: "black",
