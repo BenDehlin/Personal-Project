@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import useAxios from '../../hooks/useAxios'
-import BarChartRender from '../../RenderProps/BarChartRender'
+import withScores from "../../HOCs/withScores"
 import BarChart from './BarChart'
 import CircleChart from './CircleChart'
+import CircleChartTwo from './CircleChartTwo'
 import {createUseStyles} from 'react-jss'
 import {page} from '../../global-styles/global-styles'
 
@@ -22,18 +22,21 @@ const useStyles = createUseStyles({
   }
 })
 
-const ScoreCharts = (props) => {
+const ScoreCharts = ({data}) => {
   const {charts, chartPage} = useStyles()
   return (
     <div className={charts}>
     <div className={chartPage}>
-      <BarChart />
+      <BarChart data={data} />
     </div>
     <div className={chartPage}>
-      <CircleChart />
+      <CircleChart data={data} />
+    </div>
+    <div className={chartPage}>
+      <CircleChartTwo data={data} />
     </div>
     </div>
   )
 }
 
-export default ScoreCharts
+export default withScores(ScoreCharts)

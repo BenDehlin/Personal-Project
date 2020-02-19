@@ -69,4 +69,4 @@ const BarChart = ({ data }) => {
   return <div ref={canvas}></div>
 }
 
-export default withScores(BarChart)
+export default BarChart

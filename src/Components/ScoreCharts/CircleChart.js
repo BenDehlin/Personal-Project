@@ -50,4 +50,4 @@ const CircleChart = ({ data }) => {
   return <div ref={canvas}></div>
 }
 
-export default withScores(CircleChart)
+export default CircleChart
