@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react"
 import withScores from "../../HOCs/withScores"
 import BarChart from "./BarChart"
+import ChartJS from './ChartJS'
+import ChartJSDoughnut from './ChartJSDoughnut'
 import CircleChart from "./CircleChart"
 import CircleChartTwo from "./CircleChartTwo"
+import CircleChartThree from './CircleChartThree'
 import PieChart from "./PieChart"
 import DonutChart from "./DonutChart"
 import { createUseStyles } from "react-jss"
 import { page } from "../../global-styles/global-styles"
-
-import ChartJS from './ChartJS'
 
 const useStyles = createUseStyles({
   charts: {
@@ -32,32 +33,30 @@ const ScoreCharts = ({ data, scores }) => {
   return (
     <div className={charts}>
       <div className={chartPage}>
+        <ChartJS data={scores} type={'bar'}/>
+      </div>
+      <div className={chartPage}>
+        <ChartJS data={scores} type={'line'} />
+      </div>
+      <div className={chartPage}>
+        <ChartJSDoughnut data={scores} type={'pie'} />
+      </div>
+      <div className={chartPage}>
+        <ChartJSDoughnut data={scores} type={'doughnut'} />
+      </div>
+      <div className={chartPage}>
         <BarChart data={scores} />
       </div>
       <div className={chartPage}>
         <CircleChart data={scores} />
       </div>
       <div className={chartPage}>
+        <CircleChartThree data={scores} />
+      </div>
+      <div className={chartPage}>
         <CircleChartTwo data={scores} />
       </div>
-      {/* <div className={chartPage}>
-      <DonutChart data={scores} />
-    </div> */}
-    <div className={chartPage}>
-      <ChartJS data={scores} type={type} />
-      <button
-      onClick={() => type === 'bar' ? setType('line') : setType('bar')}
-      >{type === 'bar' ? 'See Line Graph' : 'See Bar Graph'}</button>
-    </div>
-      {/* <div className={chartPage}>
-        <PieChart
-          data={scores}
-          width={200}
-          height={200}
-          innerRadius={60}
-          outerRadius={100}
-        />
-      </div> */}
+
     </div>
   )
 }

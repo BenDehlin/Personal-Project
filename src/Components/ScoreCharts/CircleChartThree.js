@@ -22,7 +22,9 @@ const CircleChart = ({ data }) => {
       .data(data)
       .enter()
       .append("circle")
-      .attr("cx", 450)
+      .attr("cx", (datapoint, iteration) =>
+        iteration % 2 === 0 ? 450 + 15 * scale : 450 - 15 * scale
+      )
       .attr("cy", 250)
       .attr("r", datapoint => datapoint * scale)
       .attr("stroke", (datapoint, iteration) =>
@@ -30,8 +32,7 @@ const CircleChart = ({ data }) => {
       )
       .attr("id", (datapoint, iteration) => iteration)
       .on("mouseover", function(datapoint, iteration) {
-        d3.select(this)
-        .style("fill", () =>
+        d3.select(this).style("fill", () =>
           iteration % 2 === 0 ? variables.blue : variables.red
         )
         svgCanvas

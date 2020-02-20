@@ -15,6 +15,7 @@ const useStyles = createUseStyles({
   dashboard: {
     ...page,
     flexFlow: "row",
+    alignItems: 'flex-start',
     minHeight: "80vh"
   },
   side: {
@@ -129,6 +130,11 @@ const Dashboard = ({ user, history }) => {
             {games && games.map(game => (
               <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/${game.game_name}`)}>
                 <h1>{game.game_name}</h1>
+              </div>
+            ))}
+                        {games && games.map(game => (
+              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/charts/${game.game_name}`)}>
+                <h1>Charts: {game.game_name}</h1>
               </div>
             ))}
           </div>

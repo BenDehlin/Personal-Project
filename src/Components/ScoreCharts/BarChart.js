@@ -1,12 +1,11 @@
 import React from "react"
 import * as d3 from "d3"
 import { variables } from "../../global-styles/global-styles"
-import './BarChart.css'
-import useChart from '../../hooks/useChart'
+import useChart from "../../hooks/useChart"
 
 const BarChart = ({ data }) => {
   const [canvas] = useChart(data, drawChart)
-  function drawChart(){
+  function drawChart() {
     // draw blank svg
     const canvasHeight = 500
     const canvasWidth = 900
@@ -26,15 +25,19 @@ const BarChart = ({ data }) => {
       .append("rect")
       .attr("width", barWidth)
       .attr("height", datapoint => datapoint * scale)
-      .attr("stroke", (datapoint, iteration) => iteration % 2 === 0 ? variables.red : variables.blue)
-      .attr("fill", 'black')
+      .attr("stroke", 'black')
+      .attr("fill", 'blue')
       .attr("x", (datapoint, iteration) => iteration * (barWidth + 5))
       .attr("y", datapoint => canvasHeight - datapoint * scale)
-      .on('mouseover', function(datapoint, iteration){
-        d3.select(this).style('fill', () => iteration % 2 === 0 ? variables.red : variables.blue).style('stroke', 'black')
+      .on("mouseover", function(datapoint, iteration) {
+        d3.select(this)
+          .style("fill", 'red')
+          .style("stroke", "black")
       })
-      .on('mouseout', function(datapoint, iteration){
-        d3.select(this).style('fill', 'black').style('stroke', () => iteration % 2 === 0 ? variables.red : variables.blue)
+      .on("mouseout", function(datapoint, iteration) {
+        d3.select(this)
+          .style("fill", "blue")
+          .style("stroke", 'black')
       })
 
     svgCanvas

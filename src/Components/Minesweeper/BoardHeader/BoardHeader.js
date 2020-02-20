@@ -2,6 +2,7 @@ import React from "react"
 import { createUseStyles } from "react-jss"
 import { IoIosRefreshCircle } from "react-icons/io"
 import { variables } from "../../../global-styles/global-styles"
+import { withRouter } from "react-router-dom"
 const { primary, secondary, red, blue } = variables
 
 const useStyles = createUseStyles({
@@ -20,7 +21,9 @@ const useStyles = createUseStyles({
     display: "flex",
     flexFlow: "column",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    border: '1px solid black',
+    "&:hover": { backgroundColor: "white", color: 'black' }
   },
   h1: {
     margin: 10
@@ -41,13 +44,17 @@ const BoardHeader = ({
   minutes,
   seconds,
   score,
-  highScore
+  highScore,
+  history
 }) => {
   const { header, h1, icon, headerSection } = useStyles()
 
   return (
     <div className={header}>
-      <div className={headerSection}>
+      <div
+        className={headerSection}
+        onClick={() => history.push("/games/highscores/charts/minesweeper")}
+      >
         <h3 className={h1}>High Score: {highScore.score}</h3>
         <h3 className={h1}>SCORE: {score < 10 ? "0" + score : score}</h3>
       </div>
@@ -71,4 +78,4 @@ const BoardHeader = ({
   )
 }
 
-export default BoardHeader
+export default withRouter(BoardHeader)

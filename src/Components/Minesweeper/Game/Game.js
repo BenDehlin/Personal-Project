@@ -65,7 +65,11 @@ const Game = () => {
     for (let i = 0; i < numBombs; i++) {
       let x = Math.floor(Math.random() * numRows)
       let y = Math.floor(Math.random() * numColumns)
-      newGrid[x][y].isBomb = true
+      if(newGrid[x][y].isBomb){
+        i--
+      }else{
+        newGrid[x][y].isBomb = true
+      }
     }
     setGrid(newGrid)
   }

@@ -11,15 +11,25 @@ export default class ChartJS extends Component {
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d")
     axios.get("/api/minesweeper/score/high/all").then(results => {
-      const data = results.data.map(element => element.score)
+      const scores = results.data.map(element => element.score)
+      const colors = results.data.map((element, index) => index % 2 === 0 ? 'red': 'blue')
+      const times = results.data.map(element => element.time)
       new Chart(myChartRef, {
         type: this.props.type,
         data: {
-          labels: data,
+          labels: scores,
           datasets: [
             {
-              label: "Scores",
-              data: data
+              label: "Score",
+              data: scores,
+              backgroundColor: 'red',
+              borderColor: 'black',
+            },
+            {
+              label: "Time",
+              data: times,
+              backgroundColor: 'blue',
+              borderColor: 'black',
             }
           ]
         },
@@ -40,7 +50,9 @@ export default class ChartJS extends Component {
             datasets: [
               {
                 label: "Scores",
-                data: data
+                data: data,
+                backgroundColor: 'blue',
+                borderColor: 'green'
               }
             ]
           },
