@@ -1,29 +1,12 @@
-import React, { useEffect, useRef } from "react"
-import withScores from "../../HOCs/withScores"
+import React from "react"
 import * as d3 from "d3"
 import { variables } from "../../global-styles/global-styles"
-import {createUseStyles} from 'react-jss'
 import './BarChart.css'
-
-// const useStyles = createUseStyles({
-//   barStyle: {
-//     border: '1px solid black',
-//     '&:hover':{
-//       boxShadow: `.6em .6em .6em ${variables.primary}`
-//     }
-//   }
-// })
+import useChart from '../../hooks/useChart'
 
 const BarChart = ({ data }) => {
-  // const {barStyle} = useStyles()
-  const canvas = useRef("canvas")
-  useEffect(() => {
-    if (data[0]) {
-      drawBarChart()
-    }
-  }, [data])
-
-  const drawBarChart = () => {
+  const [canvas] = useChart(data, drawChart)
+  function drawChart(){
     // draw blank svg
     const canvasHeight = 500
     const canvasWidth = 900
