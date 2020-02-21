@@ -8,8 +8,6 @@ import Button from "@material-ui/core/Button"
 import { page } from "../../global-styles/global-styles"
 import axios from "axios"
 import { toast } from "react-toastify"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
-// import Icon from "@material-ui/core/Icon"
 
 const useStyles = createUseStyles({
   chat: {
@@ -38,10 +36,11 @@ const useStyles = createUseStyles({
 
 const Chat = ({ user, match, history }) => {
   const { chat, chatMessages, chatInput, chatInputField } = useStyles()
-  const messages = useRef([])
+  // const messages = useRef([])
+  let [messages, setMessages] = useState([])
   const connected = useRef(false)
   const [message, setMessage] = useState("")
-  const [updateToggle, setUpdateToggle] = useState(false)
+  // const [updateToggle, setUpdateToggle] = useState(false)
   const ENDPOINT = "http://localhost:3333"
   const socket = io.connect(ENDPOINT)
 
@@ -70,12 +69,14 @@ const Chat = ({ user, match, history }) => {
         })
         connected.current = true
         socket.on("message", message => {
-          messages.current = [message.message, ...messages.current]
-          setUpdateToggle(!updateToggle)
+          // messages.current = [message.message, ...messages.current]
+          setMessages(messages = [message.message, ...messages])
+          // setUpdateToggle(!updateToggle)
         })
         socket.on("messages", incomingMessages => {
-          messages.current = [...incomingMessages.messages]
-          setUpdateToggle(!updateToggle)
+          // messages.current = [...incomingMessages.messages]
+          setMessages(messages = [...incomingMessages.messages])
+          // setUpdateToggle(!updateToggle)
         })
       }
     })
@@ -83,7 +84,7 @@ const Chat = ({ user, match, history }) => {
 
   const sendMessage = e => {
     e.preventDefault()
-    if (connected) {
+    if (connected && message) {
       socket.emit(
         "sendMessage",
         {
@@ -96,7 +97,7 @@ const Chat = ({ user, match, history }) => {
         }
       )
     } else {
-      toast.error("You are not allowed to chat in this room")
+      toast.error("Cannot send blank messages")
     }
   }
   return (
@@ -104,7 +105,8 @@ const Chat = ({ user, match, history }) => {
       <div className={chatMessages}>
         <h1>Chat</h1>
         {messages &&
-          messages.current.map((element, index) => {
+          // messages.current.map((element, index) => {
+          messages.map((element, index) => {
             return (
               <h2>
                 {element.username}: {element.message_content}

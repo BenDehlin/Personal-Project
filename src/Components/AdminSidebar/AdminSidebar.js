@@ -26,16 +26,16 @@ const useStyles = createUseStyles({
     height: "80vh"
   },
   adminSidebarSection: {
-    width: '80%',
-    backgroundColor: 'white',
-    border: '1px solid white',
-    color: 'black',
+    width: "80%",
+    backgroundColor: "white",
+    border: "1px solid white",
+    color: "black",
     marginTop: 20,
-    paddingBottom: 10
-,    borderRadius: 10,
-    '&:hover': {
-      backgroundColor: 'black',
-      color: 'white'
+    paddingBottom: 10,
+    borderRadius: 10,
+    "&:hover": {
+      backgroundColor: "black",
+      color: "white"
     }
   },
   heading: {
@@ -57,11 +57,18 @@ const useStyles = createUseStyles({
   }
 })
 
-const AdminSidebar = ({ history }) => {
-  const { adminSidebar, adminSidebarPlaceholder, adminSidebarSection, heading } = useStyles()
+const AdminSidebar = ({ history, location }) => {
+  const {
+    adminSidebar,
+    adminSidebarPlaceholder,
+    adminSidebarSection,
+    heading
+  } = useStyles()
   return (
     <>
-      <div className={adminSidebarPlaceholder}></div>
+      <div
+        className={adminSidebarPlaceholder}
+      ></div>
       <div className={adminSidebar}>
         <div className={adminSidebarSection}>
           <p className={heading}>Users</p>

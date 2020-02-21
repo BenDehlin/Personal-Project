@@ -15,9 +15,11 @@ import Rooms from './Components/Rooms/Rooms'
 import Scores from './Components/Scores/Scores'
 import Minesweeper from './Components/Minesweeper/Game/Game'
 import ScoreCharts from './Components/ScoreCharts/ScoreCharts'
+import LandingPage from './Components/LandingPage/LandingPage'
 
 export default (
   <Switch>
+    <Route exact path = '/' component={LandingPage} />
     <Route exact path = '/login' component={Login} />
     <Route path = '/register' component={Register} />
     <Route path = '/dashboard' component={Dashboard} />

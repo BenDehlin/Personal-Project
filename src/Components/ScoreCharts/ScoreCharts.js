@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import withScores from "../../HOCs/withScores"
 import BarChart from "./BarChart"
 import ChartJS from './ChartJS'
@@ -6,8 +6,7 @@ import ChartJSDoughnut from './ChartJSDoughnut'
 import CircleChart from "./CircleChart"
 import CircleChartTwo from "./CircleChartTwo"
 import CircleChartThree from './CircleChartThree'
-import PieChart from "./PieChart"
-import DonutChart from "./DonutChart"
+import ChartJSScatter from './ChartJSScatter'
 import { createUseStyles } from "react-jss"
 import { page } from "../../global-styles/global-styles"
 
@@ -45,6 +44,12 @@ const ScoreCharts = ({ data, scores }) => {
         <ChartJSDoughnut data={scores} type={'doughnut'} />
       </div>
       <div className={chartPage}>
+        <ChartJSDoughnut data={scores} type={'polarArea'} />
+      </div>
+      <div className={chartPage}>
+        <ChartJSScatter />
+      </div>
+      <div className={chartPage}>
         <BarChart data={scores} />
       </div>
       <div className={chartPage}>
@@ -56,7 +61,6 @@ const ScoreCharts = ({ data, scores }) => {
       <div className={chartPage}>
         <CircleChartTwo data={scores} />
       </div>
-
     </div>
   )
 }

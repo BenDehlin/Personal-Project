@@ -29,16 +29,17 @@ const useStyles = createUseStyles({
   },
 })
 
-const App = ({ getUser, user }) => {
+const App = ({ getUser, user, location }) => {
   const { app, sideBarLayout } = useStyles()
   useEffect(() => {
     getUser()
   }, [])
+  console.log(location)
   return (
     <div className={app}>
       <Header />
       <div className={sideBarLayout}>
-        {user && user.is_admin && <AdminSidebar />}
+        {user && user.is_admin && location.pathname !== '/games/highscores/charts/Minesweeper'  && <AdminSidebar />}
         {routes}
       </div>
       <ToastContainer />

@@ -1,63 +1,60 @@
-import React, { useState, useEffect, useRef } from "react";
-import * as d3 from "d3";
+import React, { useState, useEffect, useRef } from "react"
+import * as d3 from "d3"
 
 const Pie = props => {
   const generateData = (value, length = 5) =>
     d3.range(length).map((item, index) => ({
       date: index,
       value: !value ? Math.random() * 100 : value
-    }));
-    console.log(props)
+    }))
+  console.log(props)
 
-  const [data2, setData] = useState(generateData(null));
-  const ref = useRef(null);
+  const [data2, setData] = useState(generateData(null))
+  const ref = useRef(null)
   const createPie = d3
     .pie()
     .value(d => d.value)
-    .sort(null);
+    .sort(null)
   const createArc = d3
     .arc()
     .innerRadius(props.innerRadius)
-    .outerRadius(props.outerRadius);
-  const colors = d3.scaleOrdinal(d3.schemeCategory10);
-  const format = d3.format(".2f");
+    .outerRadius(props.outerRadius)
+  const colors = d3.scaleOrdinal(d3.schemeCategory10)
+  const format = d3.format(".2f")
 
-  useEffect(
-    () => {
-      const data = createPie(data2);
-      const group = d3.select(ref.current);
-      const groupWithData = group.selectAll("g.arc").data(data);
+  useEffect(() => {
+    const data = createPie(data2)
+    const group = d3.select(ref.current)
+    const groupWithData = group.selectAll("g.arc").data(data)
 
-      groupWithData.exit().remove();
+    groupWithData.exit().remove()
 
-      const groupWithUpdate = groupWithData
-        .enter()
-        .append("g")
-        .attr("class", "arc");
+    const groupWithUpdate = groupWithData
+      .enter()
+      .append("g")
+      .attr("class", "arc")
 
-      const path = groupWithUpdate
-        .append("path")
-        .merge(groupWithData.select("path.arc"));
+    const path = groupWithUpdate
+      .append("path")
+      .merge(groupWithData.select("path.arc"))
 
-      path
-        .attr("class", "arc")
-        .attr("d", createArc)
-        .attr("fill", (d, i) => colors(i))
+    path
+      .attr("class", "arc")
+      .attr("d", createArc)
+      .attr("fill", (d, i) => colors(i))
 
-      const text = groupWithUpdate
-        .append("text")
-        .merge(groupWithData.select("text"));
+    const text = groupWithUpdate
+      .append("text")
+      .merge(groupWithData.select("text"))
 
-      text
-        .attr("text-anchor", "middle")
-        .attr("alignment-baseline", "middle")
-        .attr("transform", d => `translate(${createArc.centroid(d)})`)
-        .style("fill", "white")
-        .style("font-size", 10)
-        .text(d => format(d.value));
-    },
-    []
-  );
+    text
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("transform", d => `translate(${createArc.centroid(d)})`)
+      .style("fill", "white")
+      .style("font-size", 10)
+      .text(d => format(d.value))
+  }, [])
 
   return (
     <svg width={props.width} height={props.height}>
@@ -66,7 +63,7 @@ const Pie = props => {
         transform={`translate(${props.outerRadius} ${props.outerRadius})`}
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Pie;
+export default Pie
