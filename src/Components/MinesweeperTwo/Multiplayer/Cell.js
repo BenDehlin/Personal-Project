@@ -17,12 +17,13 @@ const useStyles = createUseStyles({
   }
 })
 
-const Cell = ({ cell, clickCell }) => {
+const Cell = ({ cell, clickCell, incrementFlag, decrementFlag}) => {
   const { cellStyle } = useStyles()
   const { x, y, isBomb, isClicked, count } = cell
   let [isFlagged, setIsFlagged] = useState(cell.isFlagged)
   const flagCell = e => {
     e.preventDefault()
+    isFlagged ? incrementFlag() : decrementFlag()
     setIsFlagged(isFlagged ? (isFlagged = false) : (isFlagged = true))
   }
   return (
@@ -39,7 +40,6 @@ const Cell = ({ cell, clickCell }) => {
           height: "100%",
           width: "100%",
           backgroundColor: isFlagged && "blue",
-          // backgroundColor: isClicked && isBomb && 'red',
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
@@ -49,7 +49,6 @@ const Cell = ({ cell, clickCell }) => {
           style={{
             height: "100%",
             width: "100%",
-            // backgroundColor: isFlagged && "blue",
             backgroundColor: isClicked && isBomb && "red",
             display: "flex",
             justifyContent: "center",
@@ -58,7 +57,7 @@ const Cell = ({ cell, clickCell }) => {
         >
           {isFlagged && <MdFlag size={30} />}
           {isClicked && isBomb && <FaBomb size={25} />}
-          {isClicked && !isBomb && count}
+          {isClicked && !isBomb && count !== 0 && count}
         </div>
       </div>
     </div>

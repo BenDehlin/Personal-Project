@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
   dashboard: {
     ...page,
     flexFlow: "row",
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
     minHeight: "80vh"
   },
   side: {
@@ -38,6 +38,11 @@ const useStyles = createUseStyles({
     backgroundColor: "black",
     color: "white",
     borderRadius: 10
+  },
+  '@media (max-width: 850px)': {
+    dashboard: {
+      flexFlow: 'column'
+    }
   }
 })
 
@@ -115,28 +120,65 @@ const Dashboard = ({ user, history }) => {
           <div className={side}>
             <h1>Games:</h1>
             {games &&
+              games.map(game => {
+                const game_name = game.game_name.split(" ").join("/")
+                return (
+                  <div
+                    className={roomSection}
+                    key={game.id}
+                    onClick={() => history.push(`/games/${game_name}`)}
+                  >
+                    <h1>{game.game_name}</h1>
+                  </div>
+                )
+              })}
+          </div>
+          <div className={side}>
+            <h1>High Scores:</h1>
+            <div
+              className={roomSection}
+              onClick={() => history.push(`/games/highscores/minesweeper`)}
+            >
+              <h1>Minesweeper</h1>
+            </div>
+            <h1>Charts:</h1>
+            <div
+              className={roomSection}
+              onClick={() =>
+                history.push(`/games/highscores/charts/minesweeper`)
+              }
+            >
+              <h1>Minesweeper</h1>
+            </div>
+
+            {/* <h1>High Scores:</h1>
+            {games &&
+              games.map(game => {
+                const game_name = game.game_name.split(" ").join("/")
+                return (
+                  <div
+                    className={roomSection}
+                    key={game.id}
+                    onClick={() =>
+                      history.push(`/games/highscores/${game_name}`)
+                    }
+                  >
+                    <h1>{game.game_name}</h1>
+                  </div>
+                )
+              })}
+            {games &&
               games.map(game => (
                 <div
                   className={roomSection}
                   key={game.id}
-                  onClick={() => history.push(`/games/${game.game_name}`)}
+                  onClick={() =>
+                    history.push(`/games/highscores/charts/${game.game_name}`)
+                  }
                 >
-                  <h1>{game.game_name}</h1>
+                  <h1>Charts: {game.game_name}</h1>
                 </div>
-              ))}
-          </div>
-          <div className={side}>
-            <h1>High Scores:</h1>
-            {games && games.map(game => (
-              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/${game.game_name}`)}>
-                <h1>{game.game_name}</h1>
-              </div>
-            ))}
-                        {games && games.map(game => (
-              <div className={roomSection} key={game.id} onClick={() => history.push(`/games/highscores/charts/${game.game_name}`)}>
-                <h1>Charts: {game.game_name}</h1>
-              </div>
-            ))}
+              ))} */}
           </div>
         </div>
       )}

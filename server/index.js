@@ -20,9 +20,9 @@ const postCtrl = require("./controllers/postController")
 const roomCtrl = require("./controllers/roomController")
 const userCtrl = require("./controllers/userController")
 const roomAdminCtrl = require("./controllers/roomAdminController")
-const gameCtrl = require('./controllers/gameController')
-const minesweeperCtrl = require('./controllers/minesweeperController')
-const multiMinesweeperCtrl = require('./controllers/multiMinesweeperController')
+const gameCtrl = require("./controllers/gameController")
+const minesweeperCtrl = require("./controllers/minesweeperController")
+const multiMinesweeperCtrl = require("./controllers/multiMinesweeperController")
 
 //MIDDLEWARE
 const authMid = require("./middleware/authMiddleware")
@@ -63,12 +63,16 @@ massive(CONNECTION_STRING).then(db => {
       chatCtrl.join(db, io, socket, body, callback)
     )
     socket.on("disconnect", () => chatCtrl.disconnect(db, io, socket))
-    socket.on('leaving', (body) => chatCtrl.leaving(io, body))
+    socket.on("leaving", body => chatCtrl.leaving(io, body))
 
-    socket.on('joinminesweeper', (body) => multiMinesweeperCtrl.join(db, io, socket, body))
-    socket.on('gengrid', () => multiMinesweeperCtrl.genGrid(io))
-    socket.on('clickcell', (body) => multiMinesweeperCtrl.clickCell(io, socket, body))
-    socket.on('leaveminesweeper', (body) => multiMinesweeperCtrl.leave(db, io, socket, body))
+    socket.on("joinminesweeper", body =>
+      multiMinesweeperCtrl.join(socket, body)
+    )
+    socket.on("gengrid", () => multiMinesweeperCtrl.genGrid(io))
+    socket.on("clickcell", body =>
+      multiMinesweeperCtrl.clickCell(io, socket, body)
+    )
+    socket.on("leaveminesweeper", body => multiMinesweeperCtrl.leave(io, body))
   })
 })
 
@@ -102,7 +106,11 @@ app.post(
 app.get("/api/rooms/all", roomCtrl.getAllRooms)
 //not implemented
 // app.get('/api/room/:chatroom_id', authMid.adminsOnly, roomAdminCtrl.getRoom)
-app.get('/api/room/requests/:chatroom_id', authMid.adminsOnly, roomAdminCtrl.getJoinRequestsForRoom)
+app.get(
+  "/api/room/requests/:chatroom_id",
+  authMid.adminsOnly,
+  roomAdminCtrl.getJoinRequestsForRoom
+)
 app.post("/api/rooms", authMid.adminsOnly, roomAdminCtrl.createRoom)
 app.post(
   "/admin/rooms/:chatroom_id",
@@ -128,9 +136,21 @@ app.get(
 app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)
 
 //game endpoints
-app.get('/api/games/all', authMid.usersOnly, gameCtrl.getAllGames)
+app.get("/api/games/all", authMid.usersOnly, gameCtrl.getAllGames)
 
 //minesweeper endpoints
-app.get('/api/minesweeper/score/high', authMid.usersOnly, minesweeperCtrl.getHighScore)
-app.post('/api/minesweeper/score/new', authMid.usersOnly, minesweeperCtrl.setScore)
-app.get('/api/minesweeper/score/high/all', authMid.usersOnly, minesweeperCtrl.getAllHighScores)
+app.get(
+  "/api/minesweeper/score/high",
+  authMid.usersOnly,
+  minesweeperCtrl.getHighScore
+)
+app.post(
+  "/api/minesweeper/score/new",
+  authMid.usersOnly,
+  minesweeperCtrl.setScore
+)
+app.get(
+  "/api/minesweeper/score/high/all",
+  authMid.usersOnly,
+  minesweeperCtrl.getAllHighScores
+)

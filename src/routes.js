@@ -34,8 +34,8 @@ export default (
     <Route path = '/admin/user/:id' component={BigUser} />
     <Route path = '/admin/rooms' component={Rooms} />
     <Route path = '/games/highscores/minesweeper' component={Scores} />
-    <Route path = '/games/minesweeper' component={Minesweeper} />
-    <Route path = '/games/multiplayer' component={Multiplayer} />
+    <Route exact path = '/games/minesweeper' component={Minesweeper} />
+    <Route path = '/games/minesweeper/multi' component={Multiplayer} />
     <Route path = '/games/highscores/charts/minesweeper' component={ScoreCharts} />
   </Switch>
 )

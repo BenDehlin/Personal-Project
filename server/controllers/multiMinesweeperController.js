@@ -22,9 +22,6 @@ const checkNeighbors = ({ x, y, grid, boardState }) => {
       y + newY < columns
     ) {
       grid[x + newX][y + newY].isBomb ? count++ : null
-      // if (grid[x + newX][y + newY].isBomb) {
-      //   count++
-      // }
     }
   })
   return count
@@ -36,12 +33,12 @@ const clickCell = ({ x, y, grid, boardState }) => {
   }
   const { rows, columns } = boardState
   if (grid[x][y].isBomb) {
-    // console.log("Bomb!")
     grid.forEach((row, rowIndex) => {
       row.forEach((column, columnIndex) => {
         grid[rowIndex][columnIndex].isClicked = true
       })
     })
+    boardState.gameRunning = false
     return [grid, boardState, true]
   } else {
     grid[x][y].count = checkNeighbors({ x, y, grid, boardState })
@@ -54,7 +51,7 @@ const clickCell = ({ x, y, grid, boardState }) => {
           y + newY >= 0 &&
           y + newY < columns
         ) {
-          clickCell({ x: x + newX, y: y + newY, grid, boardState })
+          [grid, boardState, gameover] = clickCell({ x: x + newX, y: y + newY, grid, boardState })
         }
       })
     }
@@ -62,15 +59,11 @@ const clickCell = ({ x, y, grid, boardState }) => {
   }
 }
 module.exports = {
-  join: async (db, io, socket, body) => {
+  join: async (socket, body) => {
     players.push(body)
-    // console.log(players)
     socket.join("multiplayer")
   },
-  move: async (db, io, socket, body) => {
-    const { id, username, room, x, y, result } = body
-  },
-  genGrid: async (io, body, room) => {
+  genGrid: async (io) => {
     let grid = []
     const boardState = {
       rows: 10,
@@ -79,10 +72,10 @@ module.exports = {
       flags: 25,
       score: 0,
       gameRunning: false,
-      currentPlayer: 1
+      currentPlayer: players[0].id
     }
     if(players.length === 2){
-      boardState.gameRunning === true
+      boardState.gameRunning = true
       for (let x = 0; x < 10; x++) {
         grid.push([])
         for (let y = 0; y < 10; y++) {
@@ -100,11 +93,6 @@ module.exports = {
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
         grid[x][y].isBomb ? i-- : (grid[x][y].isBomb = true)
-        // if (grid[x][y].isBomb) {
-        //   i--
-        // } else {
-        //   grid[x][y].isBomb = true
-        // }
       }
     }
     io.in("multiplayer").emit("grid", { grid, boardState })
@@ -116,18 +104,15 @@ module.exports = {
     }else{
       boardState.currentPlayer = players[1].id
     }
-    // players.forEach(player => {
-    //   console.log(boardState)
-    //   boardState.currentPlayer !== player.id ? boardState.currentPlayer = player.id : null})
     await io.in("multiplayer").emit("grid", { grid, boardState })
     if (gameover) {
       await io.in("multiplayer").emit("gameover")
     }
   },
-  leave: async (db, io, socket, body) => {
+  leave: async (io, body) => {
     const {username, id, grid, boardState} = body
     players.splice(
-      players.indexOf(player => +player.id === +body.id),
+      players.indexOf(player => +player.id === +id),
       1
     )
     boardState.gameRunning = false

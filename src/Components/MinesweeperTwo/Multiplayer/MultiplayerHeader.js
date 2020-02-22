@@ -13,7 +13,8 @@ const useStyles = createUseStyles({
     flexFlow: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    color: "white"
+    color: "white",
+    padding: 10
   },
   headerSection: {
     width: "30%",
@@ -38,16 +39,32 @@ const useStyles = createUseStyles({
 })
 
 const MultiplayerHeader = ({
-  flags,
+  flagCount,
   resetBoard,
   minutes,
   seconds,
-  score,
-
+  score
 }) => {
   const { header, h1, icon, headerSection } = useStyles()
   return (
-    <div className= {header}></div>
+    <div className={header}>
+      <div className={headerSection}>
+        <h3 className={h1}>
+          FLAGS:{" "}
+          {flagCount < 10 && flagCount >= 0 ? "0" + flagCount : flagCount}
+        </h3>
+      </div>
+      <IoIosRefreshCircle
+        size={50}
+        className={icon}
+        onClick={() => {
+          resetBoard()
+        }}
+      />
+      <div className={headerSection}>
+        <h3 className={h1}>TIME: {seconds}</h3>
+      </div>
+    </div>
   )
 }
 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react"
+import React from "react"
 import Cell from "./Cell"
-const Board = ({ grid, boardState, clickCell, flagCell }) => {
+
+const Board = ({ grid, boardState, clickCell, incrementFlag, decrementFlag }) => {
   const {rows, columns, bombs, flags, score, gameRunning} = boardState
   // console.log(grid)
   // console.log(boardState)
@@ -26,8 +27,8 @@ const Board = ({ grid, boardState, clickCell, flagCell }) => {
               key={`${rowIndex}, ${cellIndex}`}
               cell={cell}
               clickCell={clickCell}
-              flagCell={flagCell}
-              // flagCell={this.flagCell}
+              incrementFlag={incrementFlag}
+              decrementFlag={decrementFlag}
             />
           ))}
         </>
