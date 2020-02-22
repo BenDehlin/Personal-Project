@@ -14,6 +14,7 @@ import BigUser from './Components/BigUser/BigUser'
 import Rooms from './Components/Rooms/Rooms'
 import Scores from './Components/Scores/Scores'
 import Minesweeper from './Components/Minesweeper/Game/Game'
+import Multiplayer from './Components/MinesweeperTwo/Multiplayer/Multiplayer'
 import ScoreCharts from './Components/ScoreCharts/ScoreCharts'
 import LandingPage from './Components/LandingPage/LandingPage'
 
@@ -34,6 +35,7 @@ export default (
     <Route path = '/admin/rooms' component={Rooms} />
     <Route path = '/games/highscores/minesweeper' component={Scores} />
     <Route path = '/games/minesweeper' component={Minesweeper} />
+    <Route path = '/games/multiplayer' component={Multiplayer} />
     <Route path = '/games/highscores/charts/minesweeper' component={ScoreCharts} />
   </Switch>
 )

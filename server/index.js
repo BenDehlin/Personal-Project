@@ -22,6 +22,7 @@ const userCtrl = require("./controllers/userController")
 const roomAdminCtrl = require("./controllers/roomAdminController")
 const gameCtrl = require('./controllers/gameController')
 const minesweeperCtrl = require('./controllers/minesweeperController')
+const multiMinesweeperCtrl = require('./controllers/multiMinesweeperController')
 
 //MIDDLEWARE
 const authMid = require("./middleware/authMiddleware")
@@ -62,6 +63,12 @@ massive(CONNECTION_STRING).then(db => {
       chatCtrl.join(db, io, socket, body, callback)
     )
     socket.on("disconnect", () => chatCtrl.disconnect(db, io, socket))
+    socket.on('leaving', (body) => chatCtrl.leaving(io, body))
+
+    socket.on('joinminesweeper', (body) => multiMinesweeperCtrl.join(db, io, socket, body))
+    socket.on('gengrid', () => multiMinesweeperCtrl.genGrid(io))
+    socket.on('clickcell', (body) => multiMinesweeperCtrl.clickCell(io, socket, body))
+    socket.on('leaveminesweeper', (body) => multiMinesweeperCtrl.leave(db, io, socket, body))
   })
 })
 

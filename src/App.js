@@ -34,7 +34,6 @@ const App = ({ getUser, user, location }) => {
   useEffect(() => {
     getUser()
   }, [])
-  console.log(location)
   return (
     <div className={app}>
       <Header />

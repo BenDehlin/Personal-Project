@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button"
 import { page } from "../../global-styles/global-styles"
 import axios from "axios"
 import { toast } from "react-toastify"
+require('dotenv').config()
+const {REACT_APP_ENDPOINT} = process.env
 
 const useStyles = createUseStyles({
   chat: {
@@ -41,7 +43,7 @@ const Chat = ({ user, match, history }) => {
   const connected = useRef(false)
   const [message, setMessage] = useState("")
   // const [updateToggle, setUpdateToggle] = useState(false)
-  const ENDPOINT = "http://localhost:3333"
+  const ENDPOINT = REACT_APP_ENDPOINT
   const socket = io.connect(ENDPOINT)
 
   useEffect(() => {
@@ -54,6 +56,7 @@ const Chat = ({ user, match, history }) => {
       })
     }
     return () => {
+      socket.emit('leaving', {username: user.username})
       socket.emit("disconnect")
       socket.disconnect()
       connected.current = false
