@@ -44,6 +44,7 @@ app.use(
     cookie: { maxAge: 1000 * 60 * 60 }
   })
 )
+app.use( express.static( `${__dirname}/../build` ) )
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)

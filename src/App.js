@@ -10,10 +10,10 @@ import { variables } from "./global-styles/global-styles"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-const { red } = variables
+const { primary, red, blue } = variables
 const useStyles = createUseStyles({
   app: {
-    backgroundColor: red,
+    backgroundColor: blue,
     textAlign: "center",
     display: "flex",
     flexFlow: "column",
@@ -38,7 +38,7 @@ const App = ({ getUser, user, location }) => {
     <div className={app}>
       <Header />
       <div className={sideBarLayout}>
-        {user && user.is_admin && location.pathname !== '/games/highscores/charts/Minesweeper'  && <AdminSidebar />}
+        {user && user.is_admin && location.pathname !== '/games/highscores/charts/minesweeper'  && <AdminSidebar />}
         {routes}
       </div>
       <ToastContainer />
