@@ -22,8 +22,13 @@ const Rooms = ({ user, history }) => {
       <h1>Rooms</h1>
       {rooms &&
         rooms.map(room => {
-          console.log(room)
-          return <SmallRoom key={room.id} id={room.id} chatroom_name={room.chatroom_name} />
+          return (
+            <SmallRoom
+              key={room.id}
+              id={room.id}
+              chatroom_name={room.chatroom_name}
+            />
+          )
         })}
     </div>
   )
