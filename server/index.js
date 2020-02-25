@@ -70,6 +70,7 @@ massive(CONNECTION_STRING).then(db => {
       multiMinesweeperCtrl.join(socket, body)
     )
     socket.on("gengrid", () => multiMinesweeperCtrl.genGrid(io))
+    socket.on('restart', () => multiMinesweeperCtrl.genGrid(io))
     socket.on("clickcell", body =>
       multiMinesweeperCtrl.clickCell(io, socket, body)
     )

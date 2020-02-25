@@ -52,6 +52,12 @@ const Multiplayer = ({ user, history }) => {
           toast.success("Begin Turn")
         }
       })
+      socket.on("reset", () => {
+        reset()
+      })
+      socket.on("gameover", () => {
+        pause()
+      })
     }
   }
 
@@ -68,7 +74,11 @@ const Multiplayer = ({ user, history }) => {
     }
   }
 
-  const resetBoard = () => {}
+  const resetBoard = () => {
+    if (!boardState.gameRunning) {
+      socket.emit("restart")
+    }
+  }
 
   const incrementFlag = () => setFlagCount(flagCount + 1)
   const decrementFlag = () => setFlagCount(flagCount - 1)

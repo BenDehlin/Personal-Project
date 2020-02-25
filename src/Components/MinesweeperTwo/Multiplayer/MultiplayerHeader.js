@@ -62,7 +62,10 @@ const MultiplayerHeader = ({
         }}
       />
       <div className={headerSection}>
-        <h3 className={h1}>TIME: {seconds}</h3>
+        <h3 className={h1}>
+          Time: {minutes > 0 && minutes + ":"}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </h3>
       </div>
     </div>
   )

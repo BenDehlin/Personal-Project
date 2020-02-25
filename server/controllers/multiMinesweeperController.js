@@ -95,7 +95,8 @@ module.exports = {
         grid[x][y].isBomb ? i-- : (grid[x][y].isBomb = true)
       }
     }
-    io.in("multiplayer").emit("grid", { grid, boardState })
+    await io.in("multiplayer").emit("grid", { grid, boardState })
+    await io.in('multiplayer').emit('reset')
   },
   clickCell: async (io, socket, body) => {
     const [grid, boardState, gameover] = clickCell(body)

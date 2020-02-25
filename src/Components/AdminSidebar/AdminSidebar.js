@@ -8,7 +8,7 @@ const useStyles = createUseStyles({
   adminSidebar: {
     borderRadius: 10,
     marginTop: "5vh",
-    boxShadow: `.6em .6em .6em ${variables.blue}`,
+    boxShadow: `.3em .3em .3em white`,
 
     width: "25vw",
     height: "80vh",
