@@ -13,9 +13,9 @@ const {
   SERVER_PASSWORD
 } = process.env
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../build/index.html`))
-})
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, `/../build/index.html`))
+// })
 app.use(express.static(`${__dirname}/../build`))
 
 //CONTROLLERS
