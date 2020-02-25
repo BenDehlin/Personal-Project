@@ -7,7 +7,6 @@ const initialState = {
 }
 
 export function setForum(payload) {
-  console.log("setForum:", payload)
   return { type: SET_FORUM, payload }
 }
 

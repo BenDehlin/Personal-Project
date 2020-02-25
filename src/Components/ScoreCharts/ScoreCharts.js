@@ -39,14 +39,6 @@ const ScoreCharts = ({ data, scores }) => {
   })
   return (
     <div className={charts}>
-      {/* <div
-        style={{
-          position: "absolute",
-          bottom: 250,
-          right: 50
-        }}
-      >
-      </div> */}
       <div
         className={chartPage}
         style={{
@@ -63,19 +55,6 @@ const ScoreCharts = ({ data, scores }) => {
         >
           {flipped ? "Bar" : "Line"}
         </Button>
-        {/* <button
-          onClick={() => set(flip => !flip)}
-          style={{
-            marginTop: 10,
-            borderRadius: 10,
-            backgroundColor: variables.red,
-            fontSize: 25
-            // height: 150,
-            // width: 150
-          }}
-        >
-          {flipped ? "Bar" : "Line"}
-        </button> */}
         <animated.div
           style={{
             opacity: opacity.interpolate(o => 1 - o),
@@ -90,7 +69,6 @@ const ScoreCharts = ({ data, scores }) => {
         <animated.div
           style={{
             opacity,
-            // display: flipped ? 'flex': 'none',
             position: "absolute",
             top: 100,
             transform: transform.interpolate(t => `${t} rotateX(180deg)`)
@@ -99,7 +77,6 @@ const ScoreCharts = ({ data, scores }) => {
           <ChartJS data={scores} type={"line"} />
         </animated.div>
       </div>
-      {/* <div className={chartPage}></div> */}
       <div
         className={chartPage}
         style={{
@@ -116,19 +93,6 @@ const ScoreCharts = ({ data, scores }) => {
         >
           {flipped ? "Pie" : "Doughnut"}
         </Button>
-        {/* <button
-          onClick={() => set(flip => !flip)}
-          style={{
-            marginTop: 10,
-            borderRadius: 10,
-            backgroundColor: variables.red,
-            fontSize: 25
-            // height: 150,
-            // width: 150
-          }}
-        >
-          {flipped ? "Pie" : "Doughnut"}
-        </button> */}
         <animated.div
           style={{
             opacity: opacity.interpolate(o => 1 - o),
@@ -139,23 +103,18 @@ const ScoreCharts = ({ data, scores }) => {
           }}
         >
           <ChartJSDoughnut data={scores} type={"pie"} />
-          {/* <ChartJS data={scores} type={"bar"} /> */}
         </animated.div>
         <animated.div
           style={{
             opacity,
-            // display: flipped ? 'flex': 'none',
             position: "absolute",
             top: 100,
             transform: transform.interpolate(t => `${t} rotateX(180deg)`)
           }}
         >
           <ChartJSDoughnut data={scores} type={"doughnut"} />
-          {/* <ChartJS data={scores} type={"line"} /> */}
         </animated.div>
       </div>
-      {/* <div className={chartPage}>
-      </div> */}
       <div className={chartPage}>
         <ChartJSDoughnut data={scores} type={"polarArea"} />
       </div>

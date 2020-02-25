@@ -65,6 +65,15 @@ const About = () => {
       <ul>
         <li>React-Icons</li>
       </ul>
+      <h2>Charts:</h2>
+      <ul>
+        <li>ChartJS</li>
+        <li>D3</li>
+      </ul>
+      <h2>Animations:</h2>
+      <ul>
+        <li>React-Spring</li>
+      </ul>
     </div>
   )
 }

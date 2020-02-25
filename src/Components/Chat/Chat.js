@@ -8,19 +8,23 @@ import Button from "@material-ui/core/Button"
 import { page } from "../../global-styles/global-styles"
 import axios from "axios"
 import { toast } from "react-toastify"
-require('dotenv').config()
-const {REACT_APP_ENDPOINT} = process.env
+import { variables } from "../../global-styles/global-styles"
+require("dotenv").config()
+const { REACT_APP_ENDPOINT } = process.env
 
 const useStyles = createUseStyles({
   chat: {
     ...page,
     minHeight: "80vh",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   chatMessages: {
-    maxHeight: "75vh",
+    maxHeight: "70vh",
     overflow: "scroll",
-    width: "100%"
+    margin: 20,
+    width: "95%",
+    border: '1px solid black',
+    borderRadius: 10
   },
   chatInput: {
     margin: 5,
@@ -56,7 +60,7 @@ const Chat = ({ user, match, history }) => {
       })
     }
     return () => {
-      socket.emit('leaving', {username: user.username})
+      socket.emit("leaving", { username: user.username })
       socket.emit("disconnect")
       socket.disconnect()
       connected.current = false
@@ -73,12 +77,12 @@ const Chat = ({ user, match, history }) => {
         connected.current = true
         socket.on("message", message => {
           // messages.current = [message.message, ...messages.current]
-          setMessages(messages = [message.message, ...messages])
+          setMessages((messages = [message.message, ...messages]))
           // setUpdateToggle(!updateToggle)
         })
         socket.on("messages", incomingMessages => {
           // messages.current = [...incomingMessages.messages]
-          setMessages(messages = [...incomingMessages.messages])
+          setMessages((messages = [...incomingMessages.messages]))
           // setUpdateToggle(!updateToggle)
         })
       }
@@ -108,12 +112,47 @@ const Chat = ({ user, match, history }) => {
       <div className={chatMessages}>
         <h1>Chat</h1>
         {messages &&
-          // messages.current.map((element, index) => {
           messages.map((element, index) => {
+            console.log(element)
+            console.log(user)
             return (
-              <h2>
-                {element.username}: {element.message_content}
-              </h2>
+              <div
+                key={element.id}
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  padding: 10,
+                  flexFlow: "column"
+                }}
+              >
+                {element.user_id === user.id ? (
+                  <div
+                    style={{
+                      alignSelf: "flex-end",
+                      marginRight: 30,
+                      borderRadius: 10,
+                      backgroundColor: variables.blue,
+                      padding: 10,
+                      color: 'white'
+                    }}
+                  >
+                    <h3>{element.username}: {element.message_content}</h3>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      alignSelf: "flex-start",
+                      marginLeft: 30,
+                      borderRadius: 10,
+                      backgroundColor: variables.red,
+                      padding: 10,
+                      color: 'white'
+                    }}
+                  >
+                    <h3>{element.username}: {element.message_content}</h3>
+                  </div>
+                )}
+              </div>
             )
           })}
       </div>
@@ -125,14 +164,6 @@ const Chat = ({ user, match, history }) => {
           onChange={e => setMessage(e.target.value)}
           onKeyPress={e => (e.key === "Enter" ? sendMessage(e) : null)}
         />
-        {/* <Button
-          variant="contained"
-          color="primary"
-          // className={classes.button}
-          endIcon={<Icon>send</Icon>}
-        >
-          Send
-        </Button> */}
         <Button
           variant="contained"
           color="primary"
