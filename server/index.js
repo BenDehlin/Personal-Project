@@ -4,6 +4,7 @@ const session = require("express-session")
 const massive = require("massive")
 const nodemailer = require("nodemailer")
 const app = express()
+const path = require("path")
 const {
   SERVER_PORT,
   SESSION_SECRET,
@@ -11,6 +12,10 @@ const {
   SERVER_EMAIL,
   SERVER_PASSWORD
 } = process.env
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../build/index.html`))
+})
 
 //CONTROLLERS
 const authCtrl = require("./controllers/authController")
@@ -44,7 +49,7 @@ app.use(
     cookie: { maxAge: 1000 * 60 * 60 }
   })
 )
-app.use( express.static( `${__dirname}/../build` ) )
+app.use(express.static(`${__dirname}/../build`))
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)
@@ -70,7 +75,7 @@ massive(CONNECTION_STRING).then(db => {
       multiMinesweeperCtrl.join(socket, body)
     )
     socket.on("gengrid", () => multiMinesweeperCtrl.genGrid(io))
-    socket.on('restart', () => multiMinesweeperCtrl.genGrid(io))
+    socket.on("restart", () => multiMinesweeperCtrl.genGrid(io))
     socket.on("clickcell", body =>
       multiMinesweeperCtrl.clickCell(io, socket, body)
     )

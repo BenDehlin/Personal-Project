@@ -31,7 +31,7 @@ const clickCell = ({ x, y, grid, boardState }) => {
   if (grid[x][y].isClicked) {
     return [grid, boardState, false]
   }
-  const { rows, columns } = boardState
+  const { rows, columns, bombs } = boardState
   if (grid[x][y].isBomb) {
     grid.forEach((row, rowIndex) => {
       row.forEach((column, columnIndex) => {
