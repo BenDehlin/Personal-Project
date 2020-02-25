@@ -36,16 +36,23 @@ const PostForm = ({ user, match, history, forum_id }) => {
           }
         })
         .catch(err => console.log(err))
-    }else if(!user.id){
-      history.push('/login')
+    } else if (!user.id) {
+      history.push("/login")
     }
   }, [match.params.id, user.id])
 
   const submitPost = body => {
-    axios
-      .post("/api/posts", body)
-      .then(() => history.push(`/forum/${forum_id}`))
-      .catch(err => toast.error(err.response.data))
+    if (user && user.id && match.params.id) {
+      axios
+        .put(`/api/posts/${match.params.id}`, body)
+        .then(() => history.push(`/forum/${forum_id}`))
+        .catch(err => toast.error(err.response.data))
+    } else {
+      axios
+        .post("/api/posts", body)
+        .then(() => history.push(`/forum/${forum_id}`))
+        .catch(err => toast.error(err.response.data))
+    }
   }
   return (
     <Formik

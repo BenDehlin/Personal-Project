@@ -27,9 +27,9 @@ module.exports = {
     const {id} = req.params
     const {post_title, post_content, post_img} = req.body
     const user_id = req.session.user.id
-    const post = await db.get_post(id)
-    if(user_id !== post.user_id){
-      res.status(500).send('User is not author')
+    const currentPost = await db.post.get_post(id)
+    if(user_id !== currentPost[0].user_id){
+      return res.status(500).send('User is not author')
     }
     db.post.edit_post([id, post_title, post_content, post_img])
     .then(() => res.sendStatus(200))

@@ -14,9 +14,6 @@ const {
 } = process.env
 
 app.use(express.static(`${__dirname}/../build`))
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, `../build/index.html`))
-})
 
 //CONTROLLERS
 const authCtrl = require("./controllers/authController")
@@ -49,25 +46,25 @@ app.use(
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   })
-)
-
-massive(CONNECTION_STRING).then(db => {
-  app.set("db", db)
+  )
+  
+  massive(CONNECTION_STRING).then(db => {
+    app.set("db", db)
   console.log("Database connected")
   app.set("transporter", transporter)
   const io = require("socket.io")(
     app.listen(SERVER_PORT, () =>
-      console.log(`Server listening on ${SERVER_PORT}`)
+    console.log(`Server listening on ${SERVER_PORT}`)
     )
-  )
-  io.on("connection", socket => {
+    )
+    io.on("connection", socket => {
     const db = app.get("db")
     socket.on("sendMessage", (body, callback) =>
       chatCtrl.sendMessage(db, io, socket, body, callback)
-    )
-    socket.on("join", (body, callback) =>
+      )
+      socket.on("join", (body, callback) =>
       chatCtrl.join(db, io, socket, body, callback)
-    )
+      )
     socket.on("disconnect", () => chatCtrl.disconnect(db, io, socket))
     socket.on("leaving", body => chatCtrl.leaving(io, body))
 
@@ -78,7 +75,7 @@ massive(CONNECTION_STRING).then(db => {
     socket.on("restart", () => multiMinesweeperCtrl.genGrid(io))
     socket.on("clickcell", body =>
       multiMinesweeperCtrl.clickCell(io, socket, body)
-    )
+      )
     socket.on("leaveminesweeper", body => multiMinesweeperCtrl.leave(io, body))
   })
 })
@@ -109,7 +106,7 @@ app.post(
   "/api/rooms/join/:chatroom_id",
   authMid.usersOnly,
   roomCtrl.requestJoinRoom
-)
+  )
 app.get("/api/rooms/all", roomCtrl.getAllRooms)
 //not implemented
 // app.get('/api/room/:chatroom_id', authMid.adminsOnly, roomAdminCtrl.getRoom)
@@ -117,10 +114,10 @@ app.get(
   "/api/room/requests/:chatroom_id",
   authMid.adminsOnly,
   roomAdminCtrl.getJoinRequestsForRoom
-)
-app.post("/api/rooms", authMid.adminsOnly, roomAdminCtrl.createRoom)
-app.post(
-  "/admin/rooms/:chatroom_id",
+  )
+  app.post("/api/rooms", authMid.adminsOnly, roomAdminCtrl.createRoom)
+  app.post(
+    "/admin/rooms/:chatroom_id",
   authMid.adminsOnly,
   roomAdminCtrl.approveUserRoom
 )
@@ -132,25 +129,25 @@ app.post(
   "/admin/room/approve",
   authMid.adminsOnly,
   roomAdminCtrl.approveUserRoom
-)
-app.post("/admin/room/remove", authMid.adminsOnly, roomAdminCtrl.removeUserRoom)
-app.get(
+  )
+  app.post("/admin/room/remove", authMid.adminsOnly, roomAdminCtrl.removeUserRoom)
+  app.get(
   "/admin/room/users/:chatroom_id",
   authMid.adminsOnly,
   roomAdminCtrl.getUsersInRoom
-)
-//not implemented
-app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)
-
-//game endpoints
-app.get("/api/games/all", authMid.usersOnly, gameCtrl.getAllGames)
-
-//minesweeper endpoints
-app.get(
-  "/api/minesweeper/score/high",
+  )
+  //not implemented
+  app.delete("/admin/users/:id", authMid.adminsOnly, userCtrl.deleteUser)
+  
+  //game endpoints
+  app.get("/api/games/all", authMid.usersOnly, gameCtrl.getAllGames)
+  
+  //minesweeper endpoints
+  app.get(
+    "/api/minesweeper/score/high",
   authMid.usersOnly,
   minesweeperCtrl.getHighScore
-)
+  )
 app.post(
   "/api/minesweeper/score/new",
   authMid.usersOnly,
@@ -160,4 +157,8 @@ app.get(
   "/api/minesweeper/score/high/all",
   authMid.usersOnly,
   minesweeperCtrl.getAllHighScores
-)
+  )
+  
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, `../build/index.html`))
+  // })
