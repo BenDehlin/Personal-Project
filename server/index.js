@@ -1,4 +1,4 @@
-require("dotenv").config()
+require("dotenv").config({path: __dirname + '/../.env'})
 const express = require("express")
 const session = require("express-session")
 const massive = require("massive")
@@ -16,6 +16,7 @@ const {
 app.get("*", (req, res) => {
   res.sendFile(path.join(`${__dirname}/../build/index.html`))
 })
+app.use(express.static(`${__dirname}/../build`))
 
 //CONTROLLERS
 const authCtrl = require("./controllers/authController")
@@ -49,7 +50,6 @@ app.use(
     cookie: { maxAge: 1000 * 60 * 60 }
   })
 )
-app.use(express.static(`${__dirname}/../build`))
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db)
