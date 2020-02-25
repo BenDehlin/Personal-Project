@@ -94,7 +94,7 @@ const Header = ({ user, setUser, history, location }) => {
           {location.pathname === "/login" ? (
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => history.push("/register")}
             >
               Register
@@ -102,7 +102,7 @@ const Header = ({ user, setUser, history, location }) => {
           ) : (
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => history.push("/login")}
             >
               Login
