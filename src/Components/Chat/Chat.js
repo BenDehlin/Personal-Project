@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
     justifyContent: "space-between",
   },
   chatMessages: {
-    maxHeight: "70vh",
+    height: "70vh",
     overflow: "scroll",
     margin: 20,
     width: "95%",
@@ -113,8 +113,6 @@ const Chat = ({ user, match, history }) => {
         <h1>Chat</h1>
         {messages &&
           messages.map((element, index) => {
-            console.log(element)
-            console.log(user)
             return (
               <div
                 key={element.id}

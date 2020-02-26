@@ -19,7 +19,7 @@ module.exports = {
       username: "admin",
       message: {
         username: "ADMIN",
-        message_content: `${username} has joined ${room}.`
+        message_content: `${username} has joined the room.`
       }
     })
     socket.join(room)
